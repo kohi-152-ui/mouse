@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chuột Máy Tính — Tâm Lý Học Kỹ Sư</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%2300b8d9'/%3E%3Cstop offset='1' stop-color='%237b5cfa'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect x='9' y='4' width='14' height='24' rx='7' fill='url(%23g)'/%3E%3Crect x='15' y='7' width='2' height='7' rx='1' fill='white'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="bg-fx" aria-hidden="true">
+  <svg class="bg-grid" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
+    <defs>
+      <pattern id="grid" width="64" height="64" patternUnits="userSpaceOnUse">
+        <path d="M 64 0 L 0 0 0 64" fill="none" stroke="rgba(11,18,32,0.05)" stroke-width="1"/>
+      </pattern>
+    </defs>
+    <rect width="1600" height="900" fill="url(#grid)"/>
+  </svg>
+  <div class="glow glow-a"></div>
+  <div class="glow glow-b"></div>
+  <div class="glow glow-c"></div>
+</div>
+
+<div class="topbar">
+  <div class="brand"><span class="brand-dot"></span>Chuột Máy Tính</div>
+  <div class="progress-track" id="progressTrack"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="counter"><span id="counterCurrent">01</span><span class="counter-sep">/</span><span id="counterTotal">08</span></div>
+</div>
+
+<main class="deck" id="deck">
+
+  <!-- SLIDE 0 — COVER -->
+  <section class="slide cover" data-index="0">
+    <div class="slide-inner cover-inner">
+      <p class="eyebrow-course">Tâm lý học Kỹ sư · Bài trình bày chuyên đề</p>
+      <h1 class="cover-title">Chuột<br>Máy&nbsp;Tính</h1>
+      <p class="cover-sub">Từ khối gỗ vuông vức năm 1964 đến giao diện sinh học cảm ứng của tương lai — hành trình thiết kế của thiết bị trỏ quen thuộc nhất trên bàn làm việc.</p>
+      <button class="btn-start" id="btnStart">
+        <span>Bắt đầu</span>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <p class="hint" id="navHint">Dùng phím <kbd>←</kbd> <kbd>→</kbd>, lướt, hoặc chấm điều hướng bên dưới</p>
+    </div>
+    <div class="cover-visual" aria-hidden="true">
+      <svg viewBox="0 0 360 420" class="mouse-svg">
+        <defs>
+          <linearGradient id="mg1" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#00b8d9"/>
+            <stop offset="1" stop-color="#7b5cfa"/>
+          </linearGradient>
+        </defs>
+        <path class="mouse-body" d="M180 30 C260 30 300 100 300 200 C300 320 250 400 180 400 C110 400 60 320 60 200 C60 100 100 30 180 30 Z" fill="none" stroke="url(#mg1)" stroke-width="2.5"/>
+        <line class="mouse-mid" x1="180" y1="30" x2="180" y2="150" stroke="url(#mg1)" stroke-width="2"/>
+        <circle class="mouse-scroll" cx="180" cy="95" r="14" fill="none" stroke="url(#mg1)" stroke-width="2"/>
+        <circle class="pulse-dot" cx="180" cy="200" r="4" fill="#7b5cfa"/>
+      </svg>
+    </div>
+  </section>
+
+  <!-- SLIDE 1 — LỊCH SỬ RA ĐỜI -->
+  <section class="slide" data-index="1">
+    <div class="slide-inner split">
+      <div class="col-text">
+        <p class="kicker">Phần I — Lịch sử thiết kế</p>
+        <h2>Lịch sử ra đời</h2>
+        <p class="lead">Chuột máy tính được phát minh bởi Tiến sĩ <strong>Douglas C. Engelbart</strong> cùng kỹ sư trưởng <strong>Bill English</strong> tại Viện Nghiên cứu Stanford (SRI), khi máy tính vẫn còn là những cỗ máy khổng lồ chỉ giao tiếp qua thẻ đục lỗ.</p>
+        <ol class="timeline">
+          <li>
+            <span class="tl-year">Đầu 1960s</span>
+            <p>Ý tưởng hình thành khi Engelbart tham dự một hội thảo đồ họa máy tính, ông nghĩ đến việc di chuyển con trỏ trên màn hình một cách đơn giản. Hợp đồng với NASA về chọn mục trên màn hình là một động lực lớn.</p>
+          </li>
+          <li>
+            <span class="tl-year">1964</span>
+            <p>Nguyên mẫu đầu tiên ra đời tại Trung tâm Nghiên cứu Tăng cường (ARC), SRI, Menlo Park, California — nơi Engelbart giữ vai trò giám đốc.</p>
+          </li>
+          <li>
+            <span class="tl-year">1967</span>
+            <p>Bằng sáng chế <em>"X-Y Position Indicator for a Display System"</em> được nộp.</p>
+          </li>
+          <li>
+            <span class="tl-year">9/12/1968</span>
+            <p>Ra mắt công chúng tại Fall Joint Computer Conference, San Francisco — buổi thuyết trình 90 phút sau này được gọi là <em>"The Mother of All Demos"</em>.</p>
+          </li>
+          <li>
+            <span class="tl-year">1970 → 1981</span>
+            <p>Bằng sáng chế được cấp cho Engelbart năm 1970; bản quyền sau đó được bán lại cho hãng <strong>Xerox</strong> vào năm 1981.</p>
+          </li>
+        </ol>
+      </div>
+      <div class="col-visual">
+        <div class="fact-card">
+          <span class="fact-label">Nơi phát minh</span>
+          <span class="fact-value">Stanford Research Institute</span>
+          <span class="fact-sub">Menlo Park, California, Mỹ</span>
+        </div>
+        <div class="fact-card fact-card-alt">
+          <span class="fact-label">Sự kiện ra mắt</span>
+          <span class="fact-value">The Mother of All Demos</span>
+          <span class="fact-sub">90 phút thay đổi ngành điện toán</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 2 — LỊCH SỬ PHÁT TRIỂN THIẾT KẾ -->
+  <section class="slide" data-index="2">
+    <div class="slide-inner">
+      <p class="kicker">Phần I — Lịch sử thiết kế</p>
+      <h2>Bốn thời kỳ thiết kế</h2>
+      <p class="lead lead-tight">Chọn một giai đoạn để xem hình dáng, bộ phận chỉ báo và phản hồi của người dùng thay đổi ra sao qua thời gian.</p>
+
+      <div class="era-rail" id="eraRail">
+        <button class="era-btn active" data-era="0"><span class="era-btn-year">1964</span><span class="era-btn-name">Khởi đầu</span></button>
+        <button class="era-btn" data-era="1"><span class="era-btn-year">1970–1990</span><span class="era-btn-name">Chuột bi lăn</span></button>
+        <button class="era-btn" data-era="2"><span class="era-btn-year">Cuối 1990s</span><span class="era-btn-name">Quang học &amp; Laser</span></button>
+        <button class="era-btn" data-era="3"><span class="era-btn-year">2000s–nay</span><span class="era-btn-name">Công thái học &amp; Không dây</span></button>
+      </div>
+
+      <div class="era-panels" id="eraPanels">
+        <article class="era-panel active" data-era="0">
+          <img src="assets/img/image10.jpg" alt="Chuột gỗ đầu tiên 1964">
+          <div class="era-copy">
+            <h3>Khối gỗ khởi thủy</h3>
+            <p><strong>Ngoại hình:</strong> khối gỗ vuông vức, to và cồng kềnh, chỉ một nút bấm nhỏ màu đỏ, giữ nguyên màu vân gỗ.</p>
+            <p><strong>Chỉ báo:</strong> hai bánh xe kim loại đặt vuông góc với nhau ở mặt dưới.</p>
+            <p><strong>Phản hồi:</strong> người dùng kinh ngạc vì tính đột phá, nhưng khối gỗ cồng kềnh khiến việc cầm nắm không thoải mái; hai bánh xe chỉ hoạt động tốt khi di chuyển theo đường thẳng.</p>
+          </div>
+        </article>
+        <article class="era-panel" data-era="1">
+          <img src="assets/img/image14.jpg" alt="Chuột bi Xerox Alto thập niên 1970">
+          <div class="era-copy">
+            <h3>Kỷ nguyên bi lăn</h3>
+            <p><strong>Ngoại hình:</strong> chuyển sang chất liệu nhựa, thu gọn vừa lòng bàn tay, số nút tăng từ 1 lên 3, tông trắng ngà và be.</p>
+            <p><strong>Chỉ báo:</strong> bánh xe được thay bằng một viên bi cao su truyền tín hiệu qua các trục cơ học.</p>
+            <p><strong>Phản hồi:</strong> ban đầu rất thích thú vì di chuyển tự do mọi hướng, nhưng viên bi cao su dần ma sát kém, bám bụi, kẹt rít khiến con trỏ nhảy lung tung — buộc người dùng phải tháo ra lau chùi thường xuyên.</p>
+          </div>
+        </article>
+        <article class="era-panel" data-era="2">
+          <img src="assets/img/image5.jpg" alt="Chuột Apple Macintosh 1984">
+          <div class="era-copy">
+            <h3>Quang học &amp; Laser lên ngôi</h3>
+            <p><strong>Ngoại hình:</strong> thân thon gọn hơn, bổ sung con lăn chuột, màu sắc đa dạng từ đen, bạc đến trắng.</p>
+            <p><strong>Chỉ báo:</strong> đèn LED quang học hoặc tia laser kết hợp cảm biến quét bề mặt di chuyển.</p>
+            <p><strong>Phản hồi:</strong> cực kỳ tích cực — dân thiết kế đồ họa và game thủ ca ngợi độ mượt, độ nhạy cao, hết hẳn phiền toái kẹt bụi; chuột laser còn dùng được trên cả mặt kính.</p>
+          </div>
+        </article>
+        <article class="era-panel" data-era="3">
+          <img src="assets/img/image15.jpg" alt="Chuột công thái học hiện đại">
+          <div class="era-copy">
+            <h3>Công thái học &amp; Không dây</h3>
+            <p><strong>Ngoại hình:</strong> thiết kế công thái học lượn sóng ôm lòng bàn tay hoặc dạng đứng, đa dạng kích thước, cắt dây để dùng Bluetooth.</p>
+            <p><strong>Chỉ báo:</strong> cảm biến quang học độ phân giải DPI cực lớn, theo dõi chính xác đến từng pixel; một số tích hợp mặt cảm ứng.</p>
+            <p><strong>Phản hồi:</strong> được đánh giá là giải pháp hoàn hảo cho sức khỏe cổ tay khi làm việc nhiều giờ; game thủ hài lòng với tốc độ phản hồi gần như không độ trễ.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 3 — PHÂN LOẠI -->
+  <section class="slide" data-index="3">
+    <div class="slide-inner">
+      <p class="kicker">Phần II — Phân loại</p>
+      <h2>Ba cách phân loại chuột</h2>
+      <p class="lead lead-tight">Chuột máy tính hiện nay được phân loại dựa trên ba tiêu chí chính.</p>
+
+      <div class="tabs" id="classTabs">
+        <button class="tab-btn active" data-tab="c0">Nguyên lý hoạt động</button>
+        <button class="tab-btn" data-tab="c1">Phương thức kết nối</button>
+        <button class="tab-btn" data-tab="c2">Mục đích &amp; kiểu dáng</button>
+      </div>
+
+      <div class="tab-panels">
+        <div class="tab-panel active" data-tab="c0">
+          <div class="card-grid card-grid-3">
+            <figure class="mini-card"><img src="assets/img/image17.jpg" alt="Chuột bi"><figcaption><h4>Chuột bi</h4><p>Dùng viên bi cao su ở mặt dưới để lăn và điều khiển con trỏ. Đã lỗi thời do dễ bám bụi và độ chính xác kém.</p></figcaption></figure>
+            <figure class="mini-card"><img src="assets/img/image6.jpg" alt="Chuột quang"><figcaption><h4>Chuột quang</h4><p>Dùng đèn LED và camera siêu nhỏ để chụp, phân tích bề mặt di chuyển. Độ bền cao, phổ biến nhất hiện nay.</p></figcaption></figure>
+            <figure class="mini-card"><img src="assets/img/image7.jpg" alt="Chuột laser"><figcaption><h4>Chuột laser</h4><p>Dùng tia laser thay cho đèn LED. Độ nhạy (DPI) rất cao, mượt mà trên nhiều bề mặt phức tạp, kể cả mặt kính.</p></figcaption></figure>
+          </div>
+        </div>
+        <div class="tab-panel" data-tab="c1">
+          <div class="card-grid card-grid-3">
+            <figure class="mini-card"><img src="assets/img/image13.jpg" alt="Chuột có dây"><figcaption><h4>Có dây</h4><p>Kết nối qua cổng USB. Tín hiệu ổn định, không độ trễ và không cần sạc pin.</p></figcaption></figure>
+            <figure class="mini-card"><img src="assets/img/image2.jpg" alt="Chuột không dây USB Receiver"><figcaption><h4>Không dây · USB Receiver</h4><p>Kết nối qua sóng RF 2.4GHz thông qua đầu thu USB nhỏ. Kết nối nhanh, độ trễ thấp, ổn định cao.</p></figcaption></figure>
+            <figure class="mini-card"><img src="assets/img/image9.jpg" alt="Chuột Bluetooth"><figcaption><h4>Không dây · Bluetooth</h4><p>Kết nối trực tiếp với chip Bluetooth tích hợp sẵn. Gọn gàng, không tốn cổng USB, dễ chuyển đổi thiết bị.</p></figcaption></figure>
+          </div>
+        </div>
+        <div class="tab-panel" data-tab="c2">
+          <div class="card-grid card-grid-4">
+            <figure class="mini-card"><img src="assets/img/image3.jpg" alt="Chuột văn phòng"><figcaption><h4>Văn phòng</h4><p>Thiết kế tối giản, nhỏ gọn, nút cơ bản. Tập trung tiện lợi và giá thành rẻ.</p></figcaption></figure>
+            <figure class="mini-card"><img src="assets/img/image4.jpg" alt="Chuột Gaming"><figcaption><h4>Gaming</h4><p>Độ nhạy cao, nhiều nút phụ lập trình được, switch bền, thường tích hợp LED RGB.</p></figcaption></figure>
+            <figure class="mini-card"><img src="assets/img/image12.jpg" alt="Chuột công thái học"><figcaption><h4>Công thái học</h4><p>Thiết kế theo cấu tạo bàn tay (đứng hoặc nghiêng), giảm mỏi và bảo vệ cổ tay.</p></figcaption></figure>
+            <figure class="mini-card"><img src="assets/img/image1.jpg" alt="Chuột cảm ứng"><figcaption><h4>Cảm ứng</h4><p>Bề mặt phẳng, không nút bấm vật lý, điều khiển bằng thao tác vuốt, chạm đa điểm.</p></figcaption></figure>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 4 — TRẢI NGHIỆM CÁ NHÂN -->
+  <section class="slide" data-index="4">
+    <div class="slide-inner">
+      <p class="kicker">Phần III — Trải nghiệm cá nhân</p>
+      <h2>Ba loại chuột đang sử dụng</h2>
+      <p class="lead lead-tight">So sánh bộ phận chỉ báo, bộ phận điều khiển cùng ưu và nhược điểm thực tế của từng loại kết nối.</p>
+
+      <div class="tabs" id="useTabs">
+        <button class="tab-btn active" data-tab="u0">Có dây</button>
+        <button class="tab-btn" data-tab="u1">Không dây · USB Receiver</button>
+        <button class="tab-btn" data-tab="u2">Không dây · Bluetooth</button>
+      </div>
+
+      <div class="tab-panels">
+        <div class="tab-panel active" data-tab="u0">
+          <div class="use-grid">
+            <div class="use-block">
+              <h4>Bộ phận chỉ báo</h4>
+              <ul>
+                <li>Cảm biến quang học ở mặt dưới, phát hiện chuyển động trên bề mặt.</li>
+                <li>Chuyển động được đổi thành tín hiệu xác định vị trí, hướng và tốc độ con trỏ.</li>
+                <li>Một số dùng cảm biến LED quang học để nhận biết chuyển động.</li>
+              </ul>
+            </div>
+            <div class="use-block">
+              <h4>Bộ phận điều khiển</h4>
+              <ul>
+                <li>Nút trái — chọn, mở, kéo và thả.</li>
+                <li>Nút phải — mở menu tùy chọn.</li>
+                <li>Con lăn — cuộn trang, có thể nhấn cho chức năng bổ sung.</li>
+                <li>Nút bên hông — quay lại / chuyển tiếp tùy thiết kế.</li>
+                <li>Dây USB — vừa cấp điện vừa truyền dữ liệu.</li>
+              </ul>
+            </div>
+            <div class="use-block pro">
+              <h4>Ưu điểm</h4>
+              <ul><li>Kết nối ổn định, độ trễ thấp</li><li>Không cần pin hoặc sạc</li><li>Cắm là dùng được ngay</li><li>Giá thành thường thấp</li></ul>
+            </div>
+            <div class="use-block con">
+              <h4>Nhược điểm</h4>
+              <ul><li>Dây gây vướng víu</li><li>Phạm vi di chuyển bị giới hạn theo chiều dài dây</li><li>Khó mang theo, khó sắp xếp gọn gàng</li></ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-panel" data-tab="u1">
+          <div class="use-grid">
+            <div class="use-block">
+              <h4>Bộ phận chỉ báo</h4>
+              <ul>
+                <li>Cảm biến quang học ở mặt dưới, nhận biết chuyển động trên bề mặt.</li>
+                <li>Chuyển động được đổi thành tín hiệu điều khiển vị trí con trỏ.</li>
+                <li>Một số mẫu có đèn báo trạng thái kết nối hoặc pin.</li>
+              </ul>
+            </div>
+            <div class="use-block">
+              <h4>Bộ phận điều khiển</h4>
+              <ul>
+                <li>Nút trái / phải — chọn, kéo thả / mở menu tùy chọn.</li>
+                <li>Con lăn — cuộn trang và chức năng bổ sung.</li>
+                <li>Nút bên hông — quay lại / chuyển tiếp.</li>
+                <li>Nút DPI — điều chỉnh độ nhạy con trỏ.</li>
+                <li>USB Receiver — nhận tín hiệu không dây; nút nguồn bật/tắt chuột.</li>
+              </ul>
+            </div>
+            <div class="use-block pro">
+              <h4>Ưu điểm</h4>
+              <ul><li>Không dây nên dễ di chuyển</li><li>Kết nối tương đối ổn định</li><li>Phạm vi sử dụng rộng</li><li>Bàn làm việc gọn gàng hơn chuột có dây</li></ul>
+            </div>
+            <div class="use-block con">
+              <h4>Nhược điểm</h4>
+              <ul><li>Cần một cổng USB cho Receiver</li><li>Có thể làm mất đầu thu</li><li>Phải sạc hoặc thay pin</li></ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-panel" data-tab="u2">
+          <div class="use-grid">
+            <div class="use-block">
+              <h4>Bộ phận chỉ báo</h4>
+              <ul>
+                <li>Cảm biến quang học ở mặt dưới, phát hiện chuyển động trên bề mặt.</li>
+                <li>Chuyển đổi chuyển động thành tín hiệu điều khiển con trỏ.</li>
+                <li>Đèn LED báo trạng thái kết nối hoặc pin trên một số mẫu.</li>
+              </ul>
+            </div>
+            <div class="use-block">
+              <h4>Bộ phận điều khiển</h4>
+              <ul>
+                <li>Nút trái / phải — chọn, kéo thả / mở menu tùy chọn.</li>
+                <li>Con lăn — cuộn nội dung lên xuống.</li>
+                <li>Nút DPI, nút Bluetooth/Pair — điều chỉnh độ nhạy, ghép nối.</li>
+                <li>Công tắc nguồn — bật / tắt chuột.</li>
+              </ul>
+            </div>
+            <div class="use-block pro">
+              <h4>Ưu điểm</h4>
+              <ul><li>Không dây, không cần USB Receiver</li><li>Không chiếm cổng USB</li><li>Gọn gàng, dễ mang theo</li><li>Phù hợp laptop và thiết bị có Bluetooth</li></ul>
+            </div>
+            <div class="use-block con">
+              <h4>Nhược điểm</h4>
+              <ul><li>Thiết bị phải hỗ trợ Bluetooth</li><li>Cần ghép nối khi dùng lần đầu</li><li>Phải sạc hoặc thay pin</li><li>Đôi khi gặp vấn đề kết nối</li></ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 5 — CASE STUDY RAPOO MT760 -->
+  <section class="slide" data-index="5">
+    <div class="slide-inner split">
+      <div class="col-text">
+        <p class="kicker">Phần III — Trải nghiệm cá nhân</p>
+        <h2>Chuột đang dùng: Rapoo MT760</h2>
+        <p class="lead">Chuột công thái học dành cho người thuận tay phải, hỗ trợ 3 phương thức kết nối và cảm biến quang học độ nhạy cao.</p>
+        <div class="stat-row">
+          <div class="stat-chip"><span>4000</span>DPI tối đa</div>
+          <div class="stat-chip"><span>PAW3220</span>Cảm biến quang học</div>
+          <div class="stat-chip"><span>101g</span>Trọng lượng</div>
+          <div class="stat-chip"><span>3</span>Kiểu kết nối</div>
+        </div>
+        <table class="spec-table">
+          <tbody>
+            <tr><td>Nút trái / phải</td><td>Chọn, mở, kéo thả / mở menu tùy chọn</td></tr>
+            <tr><td>Con lăn dọc / ngang</td><td>Cuộn nội dung lên xuống / sang trái phải</td></tr>
+            <tr><td>Nút DPI</td><td>Điều chỉnh độ nhạy của con trỏ</td></tr>
+            <tr><td>Nút bên hông</td><td>Thực hiện thao tác chức năng phụ</td></tr>
+            <tr><td>Cổng USB-C</td><td>Sạc và kết nối có dây</td></tr>
+            <tr><td>Công tắc kết nối</td><td>Chuyển đổi giữa 2.4GHz / Bluetooth / USB-C</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col-text">
+        <div class="use-block pro">
+          <h4>Ưu điểm</h4>
+          <ul><li>Thiết kế công thái học, có phần tựa ngón cái thoải mái</li><li>Đa phương thức kết nối, dùng được nhiều thiết bị</li><li>Con lăn ngang tiện lợi khi làm việc với bảng tính</li><li>Hệ thống click giảm tiếng ồn, hợp môi trường học tập / văn phòng</li></ul>
+        </div>
+        <div class="use-block con">
+          <h4>Nhược điểm</h4>
+          <ul><li>Kích thước và trọng lượng khá lớn với một số người, dễ mỏi tay khi dùng lâu</li><li>Nhiều nút chức năng nên cần thời gian làm quen</li><li>Một số nút phụ hơi khó tiếp cận, dễ bấm nhầm</li><li>Độ chính xác giảm trên một số bề mặt không phù hợp</li></ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 6 — TƯƠNG LAI: BIOMORPH MESH -->
+  <section class="slide" data-index="6">
+    <div class="slide-inner split reverse">
+      <div class="col-visual">
+        <figure class="future-figure">
+          <img src="assets/img/image8.jpg" alt="Bản phác thảo concept chuột BioMorph Mesh">
+          <figcaption>Bản phác thảo concept — hình dáng giọt nước khuyết lòng, gân LED đổi màu linh hoạt</figcaption>
+        </figure>
+      </div>
+      <div class="col-text">
+        <p class="kicker">Phần IV — Tưởng tượng tương lai</p>
+        <h2>"BioMorph Mesh"</h2>
+        <p class="lead">Hình dáng lấy cảm hứng từ một giọt nước khuyết tinh tế ở lòng bàn tay, làm từ <strong>Polymer Sinh học Thông minh</strong> tự đổi mềm/cứng để ôm sát từng nấc xương ngón tay.</p>
+
+        <div class="feature-list" id="featureList">
+          <button class="feature-item" data-feature="0">
+            <span class="feature-num">01</span>
+            <span class="feature-title">Biến hình công thái học</span>
+            <span class="feature-chevron">＋</span>
+          </button>
+          <div class="feature-detail" data-feature="0">Cảm biến nhiệt kích hoạt chất liệu tự co giãn để vừa vặn 100% với kích thước và thói quen cầm chuột của riêng từng người.</div>
+
+          <button class="feature-item" data-feature="1">
+            <span class="feature-num">02</span>
+            <span class="feature-title">Điều khiển không gian 3D</span>
+            <span class="feature-chevron">＋</span>
+          </button>
+          <div class="feature-detail" data-feature="1">Khi nâng khỏi mặt bàn khoảng 15cm, chuột chuyển sang chế độ con trỏ vi không gian, phục vụ môi trường thực tế ảo VR/AR với giao diện holographic.</div>
+
+          <button class="feature-item" data-feature="2">
+            <span class="feature-num">03</span>
+            <span class="feature-title">Cảm biến sinh học tích hợp</span>
+            <span class="feature-chevron">＋</span>
+          </button>
+          <div class="feature-detail" data-feature="2">Đo nhịp tim, nhiệt độ da và mức độ căng thẳng; bề mặt đổi màu — xanh lá là thư giãn, đỏ rực là stress cao — để nhắc người dùng nghỉ ngơi.</div>
+
+          <button class="feature-item" data-feature="3">
+            <span class="feature-num">04</span>
+            <span class="feature-title">Sạc từ tính không dây vi không gian</span>
+            <span class="feature-chevron">＋</span>
+          </button>
+          <div class="feature-detail" data-feature="3">Tấm lót thông minh tự truyền năng lượng không dây trong phạm vi 30cm, giữ chuột luôn đầy pin dù đang rê trên bàn hay nâng lên thao tác.</div>
+        </div>
+
+        <div class="use-grid use-grid-2">
+          <div class="use-block pro"><h4>Ưu điểm</h4><ul><li>Loại bỏ hoàn toàn hội chứng ống cổ tay</li><li>Linh hoạt giữa công việc 2D và thao tác 3D</li><li>Chăm sóc sức khỏe người dùng chủ động</li></ul></div>
+          <div class="use-block con"><h4>Nhược điểm</h4><ul><li>Chi phí sản xuất cao</li><li>Cần thời gian làm quen thao tác điều khiển không gian</li></ul></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 7 — KẾT -->
+  <section class="slide cover closing" data-index="7">
+    <div class="slide-inner cover-inner">
+      <p class="eyebrow-course">Tổng kết hành trình</p>
+      <h2 class="closing-title">Từ gỗ &amp; bi lăn<br>đến giao diện sinh học</h2>
+      <div class="journey-row">
+        <span>1964 · Khối gỗ</span><span class="journey-arrow">→</span>
+        <span>1970s · Bi lăn</span><span class="journey-arrow">→</span>
+        <span>1990s · Quang &amp; Laser</span><span class="journey-arrow">→</span>
+        <span>2000s · Công thái học</span><span class="journey-arrow">→</span>
+        <span>Tương lai · BioMorph Mesh</span>
+      </div>
+      <p class="cover-sub">Cảm ơn thầy/cô và các bạn đã theo dõi bài trình bày về Chuột máy tính.</p>
+      <button class="btn-start" id="btnRestart">
+        <span>Xem lại từ đầu</span>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 4v6h6M20 20v-6h-6M4.5 15a8 8 0 0014.5 3.5M19.5 9A8 8 0 005 5.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+  </section>
+
+</main>
+
+<button class="nav-arrow nav-prev" id="navPrev" aria-label="Slide trước">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</button>
+<button class="nav-arrow nav-next" id="navNext" aria-label="Slide tiếp theo">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</button>
+
+<nav class="dots" id="dots" aria-label="Điều hướng slide"></nav>
+
+<script src="script.js"></script>
+</body>
+</html>
