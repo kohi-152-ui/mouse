@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!-- Mấy bạn học IT vào đây tìm gì thế? -->
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
@@ -476,61 +475,152 @@
 
 <script src="script.js"></script>
 
-<!--SURPRISE FOR STALKER-->
+<!-- SURPRISE FOR STALKER -->
+<style>
+  #pixel-art-overlay{
+    position:fixed; inset:0; z-index:99999; display:none;
+    align-items:center; justify-content:center; flex-direction:column;
+    background:radial-gradient(circle at 50% 38%, rgba(22,30,48,.97), rgba(5,8,14,.99));
+    backdrop-filter:blur(4px); -webkit-backdrop-filter:blur(4px);
+    font-family:'Inter',sans-serif; color:#eaf2ff; text-align:center; padding:24px;
+  }
+  #pixel-art-overlay.show{ display:flex; }
+  .pxart-eyebrow{
+    font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.16em;
+    text-transform:uppercase; color:#7bdcef; opacity:.85; margin:0 0 8px;
+  }
+  .pxart-title{
+    font-family:'Space Grotesk',sans-serif; font-size:clamp(19px,4vw,28px); font-weight:700;
+    margin:0 0 20px; background:linear-gradient(90deg,#00b8d9,#7b5cfa);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .pxart-frame{
+    position:relative; padding:14px; border-radius:16px;
+    background:linear-gradient(145deg,#00b8d9,#7b5cfa);
+    box-shadow:0 25px 70px rgba(0,0,0,.55);
+    animation:pxartGlow 3s ease-in-out infinite;
+  }
+  @keyframes pxartGlow{
+    0%,100%{ box-shadow:0 25px 70px rgba(0,184,217,.25); }
+    50%{ box-shadow:0 25px 90px rgba(123,92,250,.4); }
+  }
+  #pxartCanvas{
+    display:block; image-rendering:pixelated; image-rendering:crisp-edges;
+    border-radius:5px; width:min(60vw,290px); height:auto; background:#000;
+  }
+  .pxart-caption{
+    max-width:420px; margin:20px auto 0; font-size:14px; line-height:1.65;
+    color:rgba(234,242,255,.75);
+  }
+  .pxart-close{
+    margin-top:22px; border:1px solid rgba(234,242,255,.3); background:transparent;
+    color:#eaf2ff; font-family:'Inter',sans-serif; font-size:13px; padding:9px 22px;
+    border-radius:999px; cursor:pointer; transition:.2s;
+  }
+  .pxart-close:hover{ background:rgba(234,242,255,.12); border-color:rgba(234,242,255,.6); }
+  .pxart-hint{
+    margin-top:10px; font-size:11px; color:rgba(234,242,255,.4);
+    font-family:'JetBrains Mono',monospace;
+  }
+</style>
+ 
+<div id="pixel-art-overlay">
+  <p class="pxart-eyebrow">You've been detected browsing DevTools...</p>
+  <h3 class="pxart-title">Anyway, there's a gift for you!</h3>
+  <div class="pxart-frame">
+    <canvas id="pxartCanvas" width="50" height="64"></canvas>
+  </div>
+  <p class="pxart-caption">Thanks for visiting!</p>
+  <button class="pxart-close" id="pxartClose">Close</button>
+  <p class="pxart-hint">press ESC to close</p>
+</div>
+ 
 <script>
+(function () {
   let triggered = false;
-  document.addEventListener('keydown', function(e) {
+  const W = 50, H = 64;
+ 
+  // Real pixel data extracted from the source painting:
+  // 1) downsampled to a 50x64 grid (box/Lanczos average per cell)
+  // 2) quantized to a 32-color retro palette (median-cut, no dithering)
+  // "Der Wanderer über dem Nebelmeer" — Caspar David Friedrich, 1818 (public domain)
+  const PALETTE = ["#d0d4e5", "#ccd2e2", "#cccedb", "#c6cde0", "#c7c9d5", "#c4c5ce", "#bfc7da", "#bdc3d3", "#bec1cd", "#bbbecb", "#b5bed1", "#b6bcca", "#b2b8c5", "#b0b3bb", "#aab2c1", "#a6acb8", "#a2a6ae", "#97a1ad", "#91969c", "#848f9d", "#76818c", "#67727b", "#515559", "#343539", "#232327", "#1c1a1e", "#181519", "#141318", "#121015", "#0f0e13", "#0e0b11", "#0b090e"];
+  const ALPHABET = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  const PIXELS = "feca7777666311137a3133136aaaa6aaaacaaaaaaceefhhhhhheaaa77666331113673110111676336777aa777aaeeeeefhhhfeaaaaa611111100133001367a76136666777677aaaabbehhheeaaa6630133310001003333113336666666777aaaaaceeeefecaa611333331000131331000113366767aaaaaaacccacecceeaaa313333310111111111111311366336667aaaacaabbbbbca766333333311000000001000000110136667aaaaaaccccccb76666666631000111111111311133336677aa7aaaabbbbbccca77666663100001001111101001366446777777aaabaaaaaaa66666663111110000000111111322444455888889a9babaaaa66366333311100000000111112224446677777777899aaaaaa6633333110000000000001222336666666777777888899aaa76333331000000000000001133366666667777778999999999933313311000110000000011333366666667777789bb9997aaa3111000000001010001111122343443466777788899887777711111111111100010000002222224466647555888889998888222222222212222000112222444455555555555588889999982221112211122122112222244455555555888888888998899922211100122224bca3222224445557777558888999998899884222222222247aabee722222444444444455555888898888558554588555888bbabceb2122002444444455555588888898559988588589bb8887ababb525ii524445555888cb8888888855899985548999888a89889b8imni0444444454bffc558888855fc855555555555588888888fllg4544444455cfff555888554kjhhe8585445555888bceeb8lmd2554445555beee8855589dflkkkkjijhfc88558889befhmnomi855554558bccccbbdgjkkkjjjjkkkkkkjhhfcb87587fnnnnnol4555445bccfghhikkklkkeffgghijjjjihjjhhfec4jonnonnnd558beghjjjkkkkkjjjji99bbb9bbccdeeeeeeeffelonoooook9fhhijjjiijihhgfffffcddddhdbbbbb999859bdblpoooomnneefffecccccccdccccccffffhkidcdcccb9549ccdnooonogmog499999bbbccdddddcccjhdchiiifdceccebcfe8gnooonokmn989899bdcgddddefffeejhcgjkiid5959ecceb95hoooooonoj7bchihigfieefeeeeeeegdgkkjghif9dfddcc88ejopoooool9cchkkijklliefhhgfffffgikjjjmmkhhihfihfghkoppoooojcfhkkkklllllihjjjjhffijkkjjmmmmmjlmkljfhhmpppoooplhjkkkkllllllkijkjigfdlkkjhmmmnmmjmnmmmjjimppooooonijjjjkllllkklkkjifdb5lkkjkmmmmmmlnnmmmkhjmpppppopnfefhjjkkjjikllkjgdc55lkkjmnmmmmmnnmllmljmnpnmmnpnjhffcfhhhffgghiihd8444kkjkmnmmmmmmmkgkmllmnpni5mti4igfeeffffdffcfgfc9855kllmnnmmlkilmggikllmmtmimopmkgdccccccddfdcefeecc98llllmllkiggigffddfiilvlkpoqpomg5ccb589dgf99eeecbcfkkijkiigggdddddiigiikvkmppqoopnibe988dggdbcddgffhhigiigfdfgdd5immnnnnnopkopqpooooni8cdfgggfggdghghhhggigfddfdddgnonnonnnnpooorqpopoooldgjhghhgghghhhffiiigfggfdgdlqpooooppoopppsoopoopqnikkhjjjhjjhhhfeciiihgggfdgdiorpqppppooppqtpoooooppnlkklkkjjjhhhgghihhhggghiggfkqpqqpqppqppqtpppqpppqrmllljgffefjkkjiijhgggijllklmqqrqqrqqqroooppqrqrpppomlkhfddfgjllkkjjkkhhklmmmmmmrsrssrqppoonosutsqqppqmkjgddfhgiklllklllkijiklkinnprstsqqrppoqrsuvussrsrononmlgiiijjjjllkkjiiggiiinupqsssqrrqqqqqquvtuuuutsqprrslgjikkkklkllkjijkkiimsststrsusqrstuvvtrrstvvuutqqvmkomlkklllllkknoonlmossttuutttsrsvvusqsrstttvvtqpvmmponnlklkklmnsppqqsrrssuuusttqqutttrsstttsrrtvvsqnnnooomikklpqqpppqqqrssstusuusruvuvuutuvvutsssrssqspoooonnllmupqqqrtsqqrpqsuuuttuvuvvuvuuuvtqqqqrqqppqrppprtlmosqqqqtrqqpsrstsuttvvuuvvvvsstusqppqqqqppprrpppporrqqqrssstsssrsutstuvuuvvvussuvtuuutsrssrprrqpoppqqqrrssrsuuttsstsutstvvuvvuuuuuvurrsutstusrpopppppppqsrrqrsrstttuutststvvuvtruvuturststussrprppppqrqqqqrrsrsrsttsstussrrtttvtrrsuvvtttuttssqqqpppprsrrrqqsuusttuusstuuuvssuutustuuuuvttusrsrssqqqttuuttsqqrtutsuvuutttuuvvvvvvvuuvvvvvuvuutsuuvttuvuuvustu";
+ 
+  // Decode the compact string back into a full color grid.
+  const target = [];
+  for (let y = 0; y < H; y++) {
+    const row = [];
+    for (let x = 0; x < W; x++) {
+      const ch = PIXELS[y * W + x];
+      row.push(PALETTE[ALPHABET.indexOf(ch)]);
+    }
+    target.push(row);
+  }
+ 
+  function launchArtEasterEgg() {
+    if (triggered) return;
+    triggered = true;
+ 
+    const overlay = document.getElementById('pixel-art-overlay');
+    const canvas = document.getElementById('pxartCanvas');
+    const ctx = canvas.getContext('2d');
+    overlay.classList.add('show');
+ 
+    const total = W * H;
+    const order = Array.from({ length: total }, (_, i) => i);
+    for (let i = order.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [order[i], order[j]] = [order[j], order[i]];
+    }
+    const revealed = new Array(total).fill(false);
+    let revealCount = 0;
+    const perFrame = Math.ceil(total / 90); // ~1.5s at 60fps
+ 
+    function draw() {
+      for (let i = 0; i < total; i++) {
+        const x = i % W, y = Math.floor(i / W);
+        if (revealed[i]) {
+          ctx.fillStyle = target[y][x];
+        } else {
+          const g = 20 + Math.floor(Math.random() * 100);
+          ctx.fillStyle = `rgb(${g},${g},${g})`;
+        }
+        ctx.fillRect(x, y, 1, 1);
+      }
+    }
+ 
+    function tick() {
+      for (let k = 0; k < perFrame && revealCount < total; k++) {
+        revealed[order[revealCount]] = true;
+        revealCount++;
+      }
+      draw();
+      if (revealCount < total) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+ 
+  function closeArt() {
+    document.getElementById('pixel-art-overlay').classList.remove('show');
+    triggered = false; // allow the surprise to happen again later
+  }
+ 
+  document.getElementById('pxartClose').addEventListener('click', closeArt);
+ 
+  document.addEventListener('keydown', function (e) {
+    const overlayOpen = document.getElementById('pixel-art-overlay').classList.contains('show');
+    if (overlayOpen && e.key === 'Escape') { closeArt(); return; }
     if (
-      e.key === 'F12' || 
+      e.key === 'F12' ||
       (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) ||
       (e.ctrlKey && (e.key === 'u' || e.key === 'U'))
     ) {
-      launchTerminalEasterEgg();
+      launchArtEasterEgg();
     }
   });
-
-  function launchTerminalEasterEgg() {
-    if (triggered) return;
-    triggered = true;
-
-    const term = document.getElementById('hacker-terminal');
-    const output = document.getElementById('terminal-output');
-    term.style.display = 'block';
-
-    const lines = [
-      "ERROR 404: RESOURCE_ACCESS_DENIED",
-      "[FATAL] Unauthorized DevTools execution intercepted.",
-      "[SYS] Memory dump initiated at address 0x000F4C...",
-      "0x0000: FF 00 1A 2B 4C 99 -- SEGMENTATION FAULT",
-      "0x0010: SYSTEM INTEGRITY COMPROMISED",
-      "[WARN] Security protocol active. Interface locked."
-    ];
-
-    let i = 0;
-    
-    function typeLine() {
-      if (i >= lines.length) {
-        const randomHex = Math.floor(Math.random()*16777215).toString(16).toUpperCase();
-        output.innerHTML += `<div>[FAILED] Unhandled memory leak at 0x${randomHex}</div>`;
-      } else {
-        output.innerHTML += `<div>${lines[i]}</div>`;
-      }
-      
-      term.scrollTop = term.scrollHeight;
-      i++;
-      setTimeout(typeLine, 150); 
-    }
-    
-    typeLine();
-  }
+})();
 </script>
-
-<!-- TERMINAL -->
-<div id="hacker-terminal" style="display:none; position:fixed; inset:0; z-index:99999; background:#050505; color:#ff4444; font-family:'JetBrains Mono', Consolas, monospace; padding:40px; overflow-y:auto;">
-  <div style="max-width:800px; margin:0 auto;">
-    <div style="color:#ff0000; font-weight:bold; font-size: 20px; margin-bottom:20px;">[ ! ] CRITICAL SYSTEM FAILURE</div>
-    <div id="terminal-output"></div>
-  </div>
-</div>
 </body>
 </html>
