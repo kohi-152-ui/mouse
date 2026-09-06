@@ -480,7 +480,7 @@
 <script>
   let triggered = false;
 
-  // 1. Lắng nghe phím tắt mở DevTools
+  // Lắng nghe phím tắt mở DevTools
   document.addEventListener('keydown', function(e) {
     if (
       e.key === 'F12' || 
@@ -491,16 +491,6 @@
     }
   });
 
-  // 2. Hệ thống Radar: Tự động quét xem DevTools có đang mở không 
-  setInterval(function() {
-    const widthThreshold = window.outerWidth - window.innerWidth > 160;
-    const heightThreshold = window.outerHeight - window.innerHeight > 160;
-    
-    if (widthThreshold || heightThreshold) {
-      launchTerminalEasterEgg();
-    }
-  }, 500);
-
   function launchTerminalEasterEgg() {
     if (triggered) return;
     triggered = true;
@@ -509,7 +499,7 @@
     const output = document.getElementById('terminal-output');
     term.style.display = 'block';
 
-    // Đổi sang phong cách báo lỗi hệ thống
+    // Nội dung báo lỗi hệ thống
     const lines = [
       "ERROR 404: RESOURCE_ACCESS_DENIED",
       "[FATAL] Unauthorized DevTools execution intercepted.",
@@ -525,7 +515,7 @@
     let i = 0;
     
     function typeLine() {
-      // Khi lặp lại, chỉ in ra các dòng lỗi hex để tạo cảm giác máy bị treo (crash)
+      // Khi lặp lại, in ra các dòng lỗi hex để tạo cảm giác crash
       if (i >= lines.length) {
         const randomHex = Math.floor(Math.random()*16777215).toString(16).toUpperCase();
         output.innerHTML += `<div>[FAILED] Unhandled memory leak at 0x${randomHex}</div>`;
@@ -536,7 +526,7 @@
       term.scrollTop = term.scrollHeight;
       i++;
       
-      // Tăng tốc độ chạy chữ lên 150ms để trông giống máy đang xả log lỗi liên tục
+      // Tốc độ chạy chữ: 150ms để xả log lỗi nhanh chóng
       setTimeout(typeLine, 150); 
     }
     
@@ -544,7 +534,7 @@
   }
 </script>
 
-<!-- TERMINAL: Đã đổi màu nền đen sì và chữ đỏ cảnh báo -->
+<!-- TERMINAL LỖI -->
 <div id="hacker-terminal" style="display:none; position:fixed; inset:0; z-index:99999; background:#050505; color:#ff4444; font-family:'JetBrains Mono', Consolas, monospace; padding:40px; overflow-y:auto;">
   <div style="max-width:800px; margin:0 auto;">
     <div style="color:#ff0000; font-weight:bold; font-size: 20px; margin-bottom:20px;">[ ! ] CRITICAL SYSTEM FAILURE</div>
