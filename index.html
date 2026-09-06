@@ -479,8 +479,6 @@
 <!--SURPRISE FOR STALKER-->
 <script>
   let triggered = false;
-
-  // Lắng nghe phím tắt mở DevTools
   document.addEventListener('keydown', function(e) {
     if (
       e.key === 'F12' || 
@@ -499,7 +497,6 @@
     const output = document.getElementById('terminal-output');
     term.style.display = 'block';
 
-    // Nội dung báo lỗi hệ thống
     const lines = [
       "ERROR 404: RESOURCE_ACCESS_DENIED",
       "[FATAL] Unauthorized DevTools execution intercepted.",
@@ -512,7 +509,6 @@
     let i = 0;
     
     function typeLine() {
-      // Khi lặp lại, in ra các dòng lỗi hex để tạo cảm giác crash
       if (i >= lines.length) {
         const randomHex = Math.floor(Math.random()*16777215).toString(16).toUpperCase();
         output.innerHTML += `<div>[FAILED] Unhandled memory leak at 0x${randomHex}</div>`;
@@ -522,8 +518,6 @@
       
       term.scrollTop = term.scrollHeight;
       i++;
-      
-      // Tốc độ chạy chữ: 150ms để xả log lỗi nhanh chóng
       setTimeout(typeLine, 150); 
     }
     
@@ -531,7 +525,7 @@
   }
 </script>
 
-<!-- TERMINAL LỖI -->
+<!-- TERMINAL -->
 <div id="hacker-terminal" style="display:none; position:fixed; inset:0; z-index:99999; background:#050505; color:#ff4444; font-family:'JetBrains Mono', Consolas, monospace; padding:40px; overflow-y:auto;">
   <div style="max-width:800px; margin:0 auto;">
     <div style="color:#ff0000; font-weight:bold; font-size: 20px; margin-bottom:20px;">[ ! ] CRITICAL SYSTEM FAILURE</div>
