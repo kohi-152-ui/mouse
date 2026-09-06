@@ -480,15 +480,20 @@
 <script>
   let triggered = false;
 
-  // Lắng nghe sự kiện phím tắt F12 hoặc Ctrl+Shift+I / Ctrl+Shift+J / Ctrl+U
+  // 1. Lắng nghe sự kiện phím tắt (F12, Ctrl+Shift+I/J/C, Ctrl+U)
   document.addEventListener('keydown', function(e) {
     if (
       e.key === 'F12' || 
       (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) ||
-      (e.ctrlKey && e.key === 'u')
+      (e.ctrlKey && (e.key === 'u' || e.key === 'U'))
     ) {
       launchTerminalEasterEgg();
     }
+  });
+
+  // 2. Lắng nghe thao tác thủ công (Click chuột phải để Inspect)
+  document.addEventListener('contextmenu', function(e) {
+    launchTerminalEasterEgg();
   });
 
   function launchTerminalEasterEgg() {
@@ -500,45 +505,48 @@
     const output = document.getElementById('terminal-output');
     term.style.display = 'block';
 
-    // Các dòng lệnh chạy một lèo
+    // Các dòng lệnh sẽ hiển thị
     const lines = [
       "Initializing Neural Link...",
       "Bypassing firewall on: https://kohi-152-ui.github.io/mouse/",
       "Scanning target code structure... [████████████████████] 100%",
       "Found vulnerability: Quá nhiều kiến thức đỉnh cao về thiết kế chuột!",
       "Extracting secret messages...",
-      ">>> Chào mừng các đồng chí IT đã soi code! 🚀",
+      ">>> Chào mừng các bạn đã khám phá được bí mật! 🚀",
       ">>> Chúc bài thuyết trình 'Tâm lý học kỹ sư về Chuột máy tính' đạt điểm 10 tuyệt đối!",
-      ">>> Hệ thống tự động kích động viên: Bạn thật sự rất tinh tế khi phát hiện ra màn hình này."
+      ">>> F5 để reload nhé bạn"
     ];
 
     let i = 0;
+    
     function typeLine() {
-      if (i < lines.length) {
-        output.innerHTML += `<div>${lines[i]}</div>`;
-        i++;
-        setTimeout(typeLine, 400); // Tốc độ chạy chữ từng dòng (400ms)
-      } else {
-        setTimeout(() => {
-          output.innerHTML += `<div style="color:#ff3d9a; margin-top:20px;">> Tự hủy chế độ hacker sau 5 giây... Chúc buổi thuyết trình thành công rực rỡ!</div>`;
-          setTimeout(() => {
-            term.style.display = 'none'; // Tự tắt sau khi xem xong để không làm hỏng slide chính
-          }, 5000);
-        }, 1000);
+      // Nếu chạy hết mảng, quay lại dòng đầu tiên
+      if (i >= lines.length) {
+        i = 0; 
+        output.innerHTML += `<div style="color:#ff3d9a; margin: 15px 0;">> Đang khởi động lại tiến trình...</div>`;
       }
+      
+      // In dòng hiện tại
+      output.innerHTML += `<div>${lines[i]}</div>`;
+      
+      // Tự động cuộn xuống dưới cùng để thấy dòng mới
+      term.scrollTop = term.scrollHeight;
+      
+      i++;
+      setTimeout(typeLine, 400); // Tốc độ chạy chữ: 400ms/dòng
     }
+    
     typeLine();
   }
 </script>
 
 <!-- TERMINAL -->
-<div id="hacker-terminal" style="display:none; position:fixed; inset:0; z-index:99999; background:#0b1220; color:#00ffcc; font-family:'JetBrains Mono', monospace; padding:40px; overflow:hidden;">
+<!-- Đã sửa overflow:hidden thành overflow-y:auto để khung có thể cuộn được -->
+<div id="hacker-terminal" style="display:none; position:fixed; inset:0; z-index:99999; background:#0b1220; color:#00ffcc; font-family:'JetBrains Mono', monospace; padding:40px; overflow-y:auto;">
   <div style="max-width:800px; margin:0 auto;">
     <div style="color:#5a6376; margin-bottom:20px;">// SYSTEM SECURE OVERRIDE DETECTED... WELCOME DEVELOPER.</div>
     <div id="terminal-output"></div>
   </div>
 </div>
-
-<!-- SURPRISE FOR STALKER-->
 </body>
 </html>
