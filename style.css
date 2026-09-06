@@ -256,7 +256,7 @@ kbd{
 }
 .era-btn{
   flex: 1 1 0; min-width:140px;
-  background: var(--surface-glass); border:1px solid var(--line); border-radius: inherit;
+  background: var(--surface-glass); border:1px solid var(--line); border-radius: var(--radius-md);
   padding:14px 16px; text-align:left; display:flex; flex-direction:column; gap:4px;
   transition: all 260ms var(--ease-smooth);
 }
@@ -265,6 +265,7 @@ kbd{
 .era-btn.active {
   background: var(--surface);
   border-color: var(--violet); /* Cấu hình hiển thị viền thật màu tím thay vì transparent */
+  border-radius: var(--radius-md);
   box-shadow: 0 0 0 0.5px var(--violet), 0 16px 30px -18px rgba(123,92,250,0.5); /* Thu nhỏ lan tỏa bóng đổ để bù trừ */
 }
 .era-btn.active .era-btn-year{ color: var(--violet); }
