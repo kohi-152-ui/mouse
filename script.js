@@ -34,6 +34,7 @@
     dots.forEach((d, i) => d.classList.toggle("active", i === current));
     navPrev.disabled = current === 0;
     navNext.disabled = current === total - 1;
+    slides.forEach((s, i) => s.classList.toggle("is-active", i === current));
   }
 
   function goTo(index) {
