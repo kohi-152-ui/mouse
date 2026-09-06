@@ -432,3 +432,72 @@ kbd{
   h2{ font-size:28px; }
   .nav-arrow{ display:none; }
 }
+
+/* ============================================================
+   VIDEO SHOWCASE (Slide 5)
+   ============================================================ */
+.video-showcase {
+  width: 100%;
+  height: 65vh; /* Chiếm 65% chiều cao màn hình để tạo cảm giác choáng ngợp */
+  min-height: 400px;
+  max-height: 600px;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin-bottom: 48px; /* Khoảng cách đẩy phần Tiêu đề xuống dưới */
+  border: 1px solid var(--line);
+  box-shadow: 0 30px 60px -20px rgba(11,18,32,0.3);
+  background: var(--ink); /* Nền đen dự phòng khi video chưa tải kịp */
+}
+
+.video-showcase video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Cắt cúp video tự động để luôn lấp đầy khung hình */
+  display: block;
+}
+
+/* Đảm bảo slide header căn giữa nếu muốn giống hệt landing page */
+.slide-header {
+  margin-bottom: 40px;
+}
+
+/* ============================================================
+   CALL TO ACTION LINK (Slide 5)
+   ============================================================ */
+.action-row {
+  margin-top: 32px;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.btn-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-body);
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--violet);
+  text-decoration: none;
+  padding: 12px 22px;
+  background: var(--surface-glass);
+  border: 1px solid rgba(123,92,250, 0.4);
+  border-radius: 999px;
+  transition: all 260ms var(--ease-smooth);
+}
+
+.btn-link:hover {
+  background: var(--violet);
+  color: #fff;
+  border-color: var(--violet);
+  box-shadow: 0 10px 24px -10px rgba(123,92,250, 0.5);
+  transform: translateY(-2px);
+}
+
+.btn-link svg {
+  transition: transform 260ms var(--ease-smooth);
+}
+
+.btn-link:hover svg {
+  transform: translateX(4px);
+}
