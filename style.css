@@ -529,3 +529,32 @@ kbd{
 .btn-link:hover svg {
   transform: translateX(4px);
 }
+
+/* ============================================================
+   DISCLAIMER TEXT (Slide 7)
+   ============================================================ */
+.disclaimer-text {
+  margin-top: 64px; /* Đẩy ra xa nút bấm phía trên */
+  padding-top: 24px;
+  border-top: 1px solid var(--line); /* Đường kẻ ngang mỏng ngăn cách */
+  font-size: 11.5px;
+  line-height: 1.65;
+  color: var(--ink-faint); /* Chữ màu xám mờ */
+  max-width: 680px;
+  text-align: center;
+}
+
+.disclaimer-text strong {
+  color: var(--ink-muted);
+}
+
+.disclaimer-text a {
+  color: var(--violet);
+  text-decoration: none;
+  transition: opacity 200ms ease;
+}
+
+.disclaimer-text a:hover {
+  opacity: 0.7;
+  text-decoration: underline;
+}
