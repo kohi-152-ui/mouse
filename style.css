@@ -434,51 +434,56 @@ kbd{
 }
 
 /* ============================================================
-   SLIDE 5 — FULL-BLEED VIDEO (TRÀN VIỀN KỊCH TRẦN)
+   SLIDE 5 — FULL-BLEED VIDEO (ÉP KỊCH VIỀN BẰNG !IMPORTANT)
    ============================================================ */
-/* Ghi đè padding mặc định của slide để video chạm sát nóc và tràn ra 2 cạnh */
-.slide-full-video {
-  display: block; /* Bỏ flexbox mặc định để xếp layout từ trên xuống dưới */
-  padding: 0;     /* Xóa khoảng không dư thừa */
+/* 1. Xóa sạch lề bảo vệ của Slide gốc */
+.slide.slide-full-video {
+  padding: 0 !important;
+  display: block !important;
+  overflow-x: hidden;
 }
 
-/* Định dạng khối chứa video */
+/* 2. Ép khung video kịch 3 cạnh, xóa bo góc */
 .full-bleed-video {
-  width: 100vw;
-  height: 65vh;   /* Video chiếm 65% độ cao màn hình */
-  min-height: 400px;
   position: relative;
-  margin-bottom: 56px; /* Khoảng cách lùi xuống để bắt đầu phần nội dung */
+  width: 100%;
+  height: 70vh; /* Độ cao video (70% màn hình) */
+  min-height: 400px;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: none !important;
+  border-radius: 0 !important; /* Xóa bo tròn kịch để */
+  box-shadow: 0 10px 30px rgba(11,18,32,0.2);
 }
 
-/* Định dạng thẻ video bên trong */
+/* 3. Bắt thẻ video phải kéo dãn hết khung */
 .full-bleed-video video {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* Tự động cắt tỷ lệ mà không làm méo hình */
+  object-fit: cover;
   display: block;
+  border-radius: 0 !important;
 }
 
-/* Lớp phủ gradient từ đen sang trong suốt. Giúp thanh menu (Topbar) luôn dễ nhìn dù video có sáng tới đâu */
+/* Lớp phủ mờ (Giúp thanh tiến trình Topbar chữ không bị chìm) */
 .video-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(11,18,32,0.85) 0%, rgba(11,18,32,0) 25%);
-  pointer-events: none; /* Tránh cản trở việc click vào video nếu có */
+  background: linear-gradient(180deg, rgba(11,18,32,0.7) 0%, rgba(11,18,32,0) 25%);
+  pointer-events: none;
 }
 
-/* Phục hồi lại lề (padding) 2 bên cho nội dung chữ bên dưới video */
-.slide-full-video .slide-inner {
-  padding: 0 clamp(24px, 6vw, 90px) 80px;
-  max-width: 1180px; /* Giữ nguyên chiều rộng tối đa như các slide khác */
+/* 4. Khôi phục lại khoảng lề an toàn cho phần nội dung chữ bên dưới */
+.slide.slide-full-video .slide-inner {
+  padding: 50px clamp(24px, 6vw, 90px) 80px !important;
+  max-width: 1180px;
   margin: 0 auto;
 }
 
-/* Animation mượt mà cho phần video khi chuyển slide tới */
+/* 5. Hiệu ứng trượt video mượt mà khi tới slide này */
 .slide.is-active .full-bleed-video {
   animation: fadeInDown 700ms var(--ease-smooth);
 }
-
 @keyframes fadeInDown {
   from { opacity: 0; transform: translateY(-20px); }
   to { opacity: 1; transform: translateY(0); }
