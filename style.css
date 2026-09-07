@@ -559,7 +559,7 @@ kbd{
   justify-content: center;
   align-items: center;
   /* Đẩy khung dịch xuống phía dưới một chút so với tâm trang */
-  transform: translateY(30px);
+  transform: translateY(5px);
   margin: 0 auto;
 }
 
