@@ -9,6 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
+<script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
 </head>
 <body>
 
@@ -156,20 +157,15 @@
             <p><strong>Ngoại hình:</strong> thiết kế công thái học lượn sóng ôm lòng bàn tay hoặc dạng đứng, đa dạng kích thước, cắt dây để dùng Bluetooth.</p>
             <p><strong>Chỉ báo:</strong> cảm biến quang học độ phân giải DPI cực lớn, theo dõi chính xác đến từng pixel; một số tích hợp mặt cảm ứng.</p>
             <p><strong>Phản hồi:</strong> được đánh giá là giải pháp hoàn hảo cho sức khỏe cổ tay khi làm việc nhiều giờ; game thủ hài lòng với tốc độ phản hồi gần như không độ trễ.</p>
-          </div>
-          <!-- Khung chứa căn giữa trang -->
-          <div style="display: flex; justify-content: center; align-items: center; min-height: 100vh; background-color: #1a1a1a;">
-  
-          <!-- Thẻ iframe được đẩy xuống dưới một chút (ví dụ 50px) -->
-          <iframe 
-          title="LOGITECH-G604" 
-          width="600" 
-          height="450"
-          frameborder="0" 
-          allow="autoplay; fullscreen; xr-spatial-tracking"
-          src="https://sketchfab.com/models/d03d1638646647fb8f27d62e43642641/embed?autostart=1&ui_controls=0&ui_infos=0&ui_stop=0&ui_watermark=0&transparent=1"
-          style="margin-top: 50px; border: none;">
-          </iframe>
+          <div class="mouse-viewer-wrapper">
+            <model-viewer 
+            src="assets/Mouse1.glb" 
+            camera-controls 
+            interaction-prompt="none"
+            shadow-intensity="1"
+            camera-orbit="45deg 55deg 2.5m"
+            exposure="1.2">
+            </model-viewer>
           </div>
         </article>
       </div>
