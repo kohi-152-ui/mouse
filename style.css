@@ -520,7 +520,7 @@ kbd{
    SLIDE 6 — FUTURE / FEATURE LIST
    ============================================================ */
 .product-figure{
-  margin:0; background: var(--surface); border:1px solid var(--line); border-radius: var(--radius-lg);
+  margin:0; background: #ffffff; border:1px solid var(--line); border-radius: var(--radius-lg);
   padding: 20px; display:flex; align-items:center; justify-content:center;
   box-shadow: 0 24px 50px -28px rgba(11,18,32,0.28);
 }
