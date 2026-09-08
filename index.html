@@ -82,28 +82,38 @@
         <p class="kicker">Phần I · Lịch sử thiết kế</p>
         <h2>Lịch sử ra đời</h2>
         <p class="lead">Chuột máy tính được phát minh bởi Tiến sĩ <strong>Douglas C. Engelbart</strong> cùng kỹ sư trưởng <strong>Bill English</strong> tại Viện Nghiên cứu Stanford (SRI), khi máy tính vẫn còn là những cỗ máy khổng lồ chỉ giao tiếp qua thẻ đục lỗ.</p>
-        <ol class="timeline">
-          <li>
-            <span class="tl-year">Đầu 1960s</span>
-            <p>Ý tưởng hình thành khi Engelbart tham dự một hội thảo đồ họa máy tính, ông nghĩ đến việc di chuyển con trỏ trên màn hình một cách đơn giản. Hợp đồng với NASA về chọn mục trên màn hình là một động lực lớn.</p>
-          </li>
-          <li>
-            <span class="tl-year">1964</span>
-            <p>Nguyên mẫu đầu tiên ra đời tại Trung tâm Nghiên cứu Tăng cường (ARC), SRI, Menlo Park, California - nơi Engelbart giữ vai trò giám đốc.</p>
-          </li>
-          <li>
-            <span class="tl-year">1967</span>
-            <p>Bằng sáng chế <em>"X-Y Position Indicator for a Display System"</em> được nộp.</p>
-          </li>
-          <li>
-            <span class="tl-year">9/12/1968</span>
-            <p>Ra mắt công chúng tại Fall Joint Computer Conference, San Francisco - buổi thuyết trình 90 phút sau này được gọi là <em>"The Mother of All Demos"</em>.</p>
-          </li>
-          <li>
-            <span class="tl-year">1970 → 1981</span>
-            <p>Bằng sáng chế được cấp cho Engelbart năm 1970; bản quyền sau đó được bán lại cho hãng <strong>Xerox</strong> vào năm 1981.</p>
-          </li>
-        </ol>
+        <div class="timeline-wrap">
+          <ol class="timeline" id="historyTimeline">
+            <li class="active">
+              <span class="tl-year">Đầu 1960s</span>
+              <p>Ý tưởng hình thành khi Engelbart tham dự một hội thảo đồ họa máy tính, ông nghĩ đến việc di chuyển con trỏ trên màn hình một cách đơn giản. Hợp đồng với NASA về chọn mục trên màn hình là một động lực lớn.</p>
+            </li>
+            <li>
+              <span class="tl-year">1964</span>
+              <p>Nguyên mẫu đầu tiên ra đời tại Trung tâm Nghiên cứu Tăng cường (ARC), SRI, Menlo Park, California - nơi Engelbart giữ vai trò giám đốc.</p>
+            </li>
+            <li>
+              <span class="tl-year">1967</span>
+              <p>Bằng sáng chế <em>"X-Y Position Indicator for a Display System"</em> được nộp.</p>
+            </li>
+            <li>
+              <span class="tl-year">9/12/1968</span>
+              <p>Ra mắt công chúng tại Fall Joint Computer Conference, San Francisco - buổi thuyết trình 90 phút sau này được gọi là <em>"The Mother of All Demos"</em>.</p>
+            </li>
+            <li>
+              <span class="tl-year">1970 → 1981</span>
+              <p>Bằng sáng chế được cấp cho Engelbart năm 1970; bản quyền sau đó được bán lại cho hãng <strong>Xerox</strong> vào năm 1981.</p>
+            </li>
+          </ol>
+          <div class="timeline-nav" role="group" aria-label="Điều hướng mốc thời gian">
+            <button class="timeline-nav-btn" id="tlPrevBtn" type="button" aria-label="Mốc thời gian trước" disabled>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 15l6-6 6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <button class="timeline-nav-btn" id="tlNextBtn" type="button" aria-label="Mốc thời gian sau">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </div>
+        </div>
       </div>
       <div class="col-visual">
         <div class="fact-card">

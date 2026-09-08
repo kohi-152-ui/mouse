@@ -196,6 +196,36 @@
   initTabGroup("#useTabs");
 
   // ============================================================
+  // History timeline (slide "Lịch sử ra đời") — up/down arrows move
+  // the "phóng to" focus state between milestones
+  // ============================================================
+  (function initHistoryTimeline() {
+    const timeline = document.getElementById("historyTimeline");
+    if (!timeline) return;
+    const items = Array.from(timeline.querySelectorAll("li"));
+    const prevBtn = document.getElementById("tlPrevBtn");
+    const nextBtn = document.getElementById("tlNextBtn");
+    let index = Math.max(0, items.findIndex((li) => li.classList.contains("active")));
+
+    function render() {
+      items.forEach((li, i) => li.classList.toggle("active", i === index));
+      if (prevBtn) prevBtn.disabled = index === 0;
+      if (nextBtn) nextBtn.disabled = index === items.length - 1;
+      items[index].scrollIntoView({ behavior: "smooth", block: "nearest" });
+    }
+
+    function goTo(i) {
+      index = Math.max(0, Math.min(items.length - 1, i));
+      render();
+    }
+
+    if (prevBtn) prevBtn.addEventListener("click", () => goTo(index - 1));
+    if (nextBtn) nextBtn.addEventListener("click", () => goTo(index + 1));
+
+    render();
+  })();
+
+  // ============================================================
   // Era rail (history timeline slide)
   // ============================================================
   (function initEraRail() {
@@ -294,7 +324,7 @@
     // Đường dẫn file .glb cho từng theme — đổi ở đây nếu bạn đặt tên file khác.
     const MODEL_SRC = {
       pastel: "assets/Mouse1.glb",
-      dark: "assets/Mouse2.glb"
+      dark: "assets/Mouse1-dark.glb"
     };
     const STORAGE_KEY = "mouseDeckTheme";
 
