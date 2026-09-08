@@ -325,7 +325,7 @@
     // Đường dẫn file .glb cho từng theme — đổi ở đây nếu bạn đặt tên file khác.
     const MODEL_SRC = {
       pastel: "assets/Mouse1.glb",
-      dark: "assets/Mouse1-dark.glb"
+      dark: "assets/Mouse2.glb"
     };
     const STORAGE_KEY = "mouseDeckTheme";
 
