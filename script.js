@@ -14,6 +14,7 @@
   const navNext = document.getElementById("navNext");
   const dotsWrap = document.getElementById("dots");
   const navHint = document.getElementById("navHint");
+  const topbar = document.getElementById("topbar");
 
   counterTotal.textContent = String(total).padStart(2, "0");
 
@@ -35,6 +36,52 @@
     navPrev.disabled = current === 0;
     navNext.disabled = current === total - 1;
     slides.forEach((s, i) => s.classList.toggle("is-active", i === current));
+    showTopbar();
+  }
+
+  // ============================================================
+  // Top bar auto-hide — visible right after a slide change or when
+  // the cursor/finger is near the top edge, fades out otherwise
+  // ============================================================
+  const TOPBAR_HIDE_DELAY = 1800;
+  const TOPBAR_HOVER_ZONE = 90; // px from the top of the viewport
+  let topbarHideTimer = null;
+  let topbarHovered = false;
+
+  function showTopbar() {
+    if (!topbar) return;
+    topbar.classList.remove("is-idle");
+    clearTimeout(topbarHideTimer);
+    scheduleTopbarHide();
+  }
+
+  function scheduleTopbarHide() {
+    clearTimeout(topbarHideTimer);
+    topbarHideTimer = setTimeout(() => {
+      if (!topbarHovered) topbar.classList.add("is-idle");
+    }, TOPBAR_HIDE_DELAY);
+  }
+
+  if (topbar) {
+    topbar.addEventListener("mouseenter", () => {
+      topbarHovered = true;
+      clearTimeout(topbarHideTimer);
+      topbar.classList.remove("is-idle");
+    });
+    topbar.addEventListener("mouseleave", () => {
+      topbarHovered = false;
+      scheduleTopbarHide();
+    });
+    window.addEventListener("mousemove", (e) => {
+      if (e.clientY < TOPBAR_HOVER_ZONE) showTopbar();
+    });
+    window.addEventListener(
+      "touchmove",
+      (e) => {
+        if (e.touches[0] && e.touches[0].clientY < TOPBAR_HOVER_ZONE) showTopbar();
+      },
+      { passive: true }
+    );
   }
 
   function goTo(index) {
@@ -231,5 +278,43 @@
 
     // open the first feature by default
     if (items[0]) items[0].click();
+  })();
+
+  // ============================================================
+  // Theme toggle — Pastel (light) / Dark switch (cover slide)
+  // Dark mode points the "Công thái học & Không dây" 3D model at a
+  // separate .glb file — see MODEL_SRC below to change the paths.
+  // ============================================================
+  (function initThemeToggle() {
+    const toggleBtn = document.getElementById("themeToggle");
+    if (!toggleBtn) return;
+    const toggleLabel = document.getElementById("themeToggleLabel");
+    const modelViewer = document.getElementById("mouseModelViewer");
+
+    // Đường dẫn file .glb cho từng theme — đổi ở đây nếu bạn đặt tên file khác.
+    const MODEL_SRC = {
+      pastel: "assets/Mouse1.glb",
+      dark: "assets/Mouse2.glb"
+    };
+    const STORAGE_KEY = "mouseDeckTheme";
+
+    function applyTheme(theme, silent) {
+      document.documentElement.setAttribute("data-theme", theme);
+      toggleBtn.setAttribute("aria-pressed", theme === "dark" ? "true" : "false");
+      if (toggleLabel) toggleLabel.textContent = theme === "dark" ? "Dark" : "Pastel";
+      if (modelViewer) modelViewer.setAttribute("src", MODEL_SRC[theme] || MODEL_SRC.pastel);
+      if (!silent) {
+        try { localStorage.setItem(STORAGE_KEY, theme); } catch (e) { /* private mode / sandbox: ignore */ }
+      }
+    }
+
+    let saved = null;
+    try { saved = localStorage.getItem(STORAGE_KEY); } catch (e) { /* ignore */ }
+    applyTheme(saved === "dark" ? "dark" : "pastel", true);
+
+    toggleBtn.addEventListener("click", () => {
+      const isDark = document.documentElement.getAttribute("data-theme") === "dark";
+      applyTheme(isDark ? "pastel" : "dark");
+    });
   })();
 })();

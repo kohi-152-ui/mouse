@@ -28,7 +28,7 @@
   <div class="glow glow-c"></div>
 </div>
 
-<div class="topbar">
+<div class="topbar" id="topbar">
   <div class="brand"><span class="brand-dot"></span>Chuột Máy Tính</div>
   <div class="progress-track" id="progressTrack"><div class="progress-fill" id="progressFill"></div></div>
   <div class="counter"><span id="counterCurrent">01</span><span class="counter-sep">/</span><span id="counterTotal">08</span></div>
@@ -47,6 +47,17 @@
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </button>
       <p class="hint" id="navHint">Dùng phím <kbd>←</kbd> <kbd>→</kbd>, lướt, hoặc chấm điều hướng bên dưới</p>
+      <button class="theme-toggle" id="themeToggle" type="button" aria-pressed="false" aria-label="Chuyển giữa giao diện Pastel và Dark">
+        <svg class="theme-icon theme-icon-sun" width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <circle cx="12" cy="12" r="4.2" stroke="currentColor" stroke-width="2"/>
+          <path d="M12 2.5v2.4M12 19.1v2.4M4.2 4.2l1.7 1.7M18.1 18.1l1.7 1.7M2.5 12h2.4M19.1 12h2.4M4.2 19.8l1.7-1.7M18.1 5.9l1.7-1.7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <span class="theme-toggle-track"><span class="theme-toggle-thumb"></span></span>
+        <svg class="theme-icon theme-icon-moon" width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5Z" fill="currentColor"/>
+        </svg>
+        <span class="theme-toggle-label" id="themeToggleLabel">Pastel</span>
+      </button>
     </div>
     <div class="cover-visual" aria-hidden="true">
       <svg viewBox="0 0 360 420" class="mouse-svg">
@@ -169,6 +180,7 @@
               <img class="era-visual-pane active" data-view="image" src="assets/img/image15.jpg" alt="Chuột công thái học hiện đại">
               <div class="era-visual-pane" data-view="model">
                 <model-viewer
+                  id="mouseModelViewer"
                   src="assets/Mouse1.glb"
                   poster="assets/img/image15.jpg"
                   camera-controls
