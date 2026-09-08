@@ -165,6 +165,16 @@ img{ max-width:100%; display:block; }
   padding: 106px clamp(24px,6vw,90px) 64px;
   overflow-y:auto;
   overflow-x:hidden;
+  /* Luôn chừa sẵn chỗ cho thanh cuộn dọc — nếu không, mỗi lần khung mô tả
+     mốc lịch sử co/giãn max-height làm nội dung vượt/lùi qua ngưỡng 100vh,
+     thanh cuộn bật/tắt sẽ đổi luôn bề ngang vùng nội dung, gây cảm giác
+     "rung" cả slide. */
+  scrollbar-gutter: stable;
+}
+/* Safari < 17 chưa hỗ trợ scrollbar-gutter — ép hiện thanh cuộn thường trực
+   để đạt hiệu quả chừa chỗ tương đương. */
+@supports not (scrollbar-gutter: stable) {
+  .slide{ overflow-y: scroll; }
 }
 .slide.cover{ align-items:center; padding-top:80px; }
 .slide-inner{
