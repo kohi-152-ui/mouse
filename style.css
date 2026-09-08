@@ -127,6 +127,7 @@ img{ max-width:100%; display:block; }
   display:flex; align-items:flex-start; justify-content:center;
   padding: 106px clamp(24px,6vw,90px) 64px;
   overflow-y:auto;
+  overflow-x:hidden;
 }
 .slide.cover{ align-items:center; padding-top:80px; }
 .slide-inner{
@@ -248,17 +249,71 @@ kbd{
 .fact-value{ font-family: var(--font-display); font-size:21px; font-weight:600; color: var(--ink); }
 .fact-sub{ font-size:14.5px; color: var(--ink-muted); }
 
+.video-teaser{
+  display:flex; align-items:center; gap:16px;
+  width:100%; border:none; text-align:left; cursor:pointer;
+  font-family:inherit; color:inherit;
+}
+.video-teaser-thumb{
+  position:relative; flex:0 0 108px; width:108px; aspect-ratio:16/9;
+  border-radius:12px; overflow:hidden; box-shadow: 0 10px 22px -12px rgba(11,18,32,0.4);
+}
+.video-teaser-thumb img{ width:100%; height:100%; object-fit:cover; display:block; }
+.video-teaser-play{
+  position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+  background: rgba(11,18,32,0.32); color:#fff;
+  transition: background 220ms var(--ease-smooth);
+}
+.video-teaser-play svg{
+  width:34px; height:34px; padding:9px; border-radius:50%;
+  background: rgba(255,255,255,0.16); backdrop-filter: blur(4px);
+  transition: transform 220ms var(--ease-smooth), background 220ms var(--ease-smooth);
+}
+.video-teaser:hover .video-teaser-play{ background: rgba(11,18,32,0.5); }
+.video-teaser:hover .video-teaser-play svg{ transform: scale(1.1); background: var(--violet); }
+.video-teaser-copy{ display:flex; flex-direction:column; gap:6px; min-width:0; }
+
+/* ============================================================
+   VIDEO MODAL (lightbox — Mother of All Demos)
+   ============================================================ */
+.video-modal{
+  position:fixed; inset:0; z-index:200; display:none; align-items:center; justify-content:center;
+  padding: 24px;
+}
+.video-modal.is-open{ display:flex; }
+.video-modal-backdrop{
+  position:absolute; inset:0; background: rgba(5,7,13,0.86); backdrop-filter: blur(6px);
+}
+.video-modal-dialog{
+  position:relative; width:min(1080px, 94vw); background:#000; border-radius:20px;
+  overflow:hidden; box-shadow: 0 50px 100px -30px rgba(0,0,0,0.6);
+  animation: modalIn 320ms var(--ease-smooth);
+}
+.video-modal-video{ width:100%; aspect-ratio:16/9; display:block; background:#000; }
+.video-modal-close{
+  position:absolute; top:14px; right:14px; z-index:2; width:40px; height:40px; border-radius:50%;
+  background: rgba(255,255,255,0.14); backdrop-filter: blur(6px); border:1px solid rgba(255,255,255,0.2);
+  color:#fff; display:flex; align-items:center; justify-content:center;
+  transition: background 200ms var(--ease-smooth), transform 200ms var(--ease-smooth);
+}
+.video-modal-close:hover{ background: rgba(255,255,255,0.26); transform: scale(1.06); }
+@keyframes modalIn{ from{ opacity:0; transform: scale(0.96) translateY(10px);} to{ opacity:1; transform:scale(1) translateY(0);} }
+@media (prefers-reduced-motion: reduce){ .video-modal-dialog{ animation:none; } }
+
 /* ============================================================
    ERA RAIL (slide 2)
    ============================================================ */
 .era-rail{
   display:flex; gap:10px; margin-bottom:22px; overflow-x:auto; padding-bottom:4px;
+  scroll-behavior:smooth; scroll-snap-type: x proximity;
+  -webkit-overflow-scrolling: touch;
 }
 .era-btn{
   flex: 1 1 0; min-width:140px;
   background: var(--surface-glass); border:1px solid var(--line); border-radius: var(--radius-md);
   padding:14px 16px; text-align:left; display:flex; flex-direction:column; gap:4px;
   transition: all 260ms var(--ease-smooth);
+  scroll-snap-align: center;
 }
 .era-btn-year{ font-family: var(--font-body); font-weight:600; font-size:11.5px; color: var(--ink-faint); }
 .era-btn-name{ font-family: var(--font-display); font-size:15px; font-weight:600; color: var(--ink-muted); }
@@ -279,6 +334,27 @@ kbd{
 }
 .era-panel.active{ display:grid; }
 .era-panel img{ border-radius: var(--radius-lg); border:1px solid var(--line); box-shadow: 0 24px 50px -30px rgba(11,18,32,0.35); max-height:300px; width:100%; object-fit:cover; }
+
+.era-visual{ display:flex; flex-direction:column; gap:12px; }
+.era-visual-toggle{ display:inline-flex; gap:6px; align-self:flex-start; background: var(--surface-glass); border:1px solid var(--line); border-radius:999px; padding:4px; }
+.era-visual-btn{
+  background:transparent; border:none; border-radius:999px; padding:7px 14px;
+  font-family: var(--font-body); font-size:12.5px; font-weight:600; color: var(--ink-muted);
+  transition: all 220ms var(--ease-smooth);
+}
+.era-visual-btn.active{ background: var(--ink); color:#fff; }
+.era-visual-stage{
+  position:relative; width:100%; height:300px; border-radius: var(--radius-lg);
+  border:1px solid var(--line); overflow:hidden; background: var(--surface);
+  box-shadow: 0 24px 50px -30px rgba(11,18,32,0.35);
+}
+.era-visual-pane{
+  position:absolute; inset:0; opacity:0; visibility:hidden;
+  transition: opacity 260ms var(--ease-smooth);
+}
+.era-visual-pane.active{ opacity:1; visibility:visible; }
+.era-visual-pane img{ width:100%; height:100%; object-fit:cover; border:none; box-shadow:none; border-radius:0; max-height:none; }
+.era-visual-pane model-viewer{ width:100%; height:100%; --poster-color: transparent; }
 .era-copy h3{ font-size:25px; margin-bottom:14px; }
 .era-copy p{ font-size:16px; line-height:1.65; color: var(--ink-muted); margin-bottom:10px; }
 .era-copy strong{ color: var(--ink); }
@@ -547,25 +623,4 @@ kbd{
 .disclaimer-text a:hover {
   opacity: 0.7;
   text-decoration: underline;
-}
-
-
-/* Khung chứa mô hình 3D (Căn giữa và hạ xuống dưới một chút) */
-.mouse-viewer-wrapper {
-  width: 100%;
-  max-width: 600px;
-  height: 500px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  /* Đẩy khung dịch xuống phía dưới một chút so với tâm trang */
-  transform: translateY(5px);
-  margin: 0 auto;
-}
-
-/* Thẻ model-viewer tự động lấy kích thước khung và làm trong suốt nền */
-.mouse-viewer-wrapper model-viewer {
-  width: 100%;
-  height: 100%;
-  background-color: transparent; 
 }

@@ -65,7 +65,7 @@
   </section>
 
   <!-- SLIDE 1 - INVENTION HISTORY -->
-  <section class="slide" data-index="1"-->
+  <section class="slide" data-index="1">
     <div class="slide-inner split">
       <div class="col-text">
         <p class="kicker">Phần I · Lịch sử thiết kế</p>
@@ -100,11 +100,19 @@
           <span class="fact-value">Stanford Research Institute</span>
           <span class="fact-sub">Menlo Park, California, Mỹ</span>
         </div>
-        <div class="fact-card fact-card-alt">
-          <span class="fact-label">Sự kiện ra mắt</span>
-          <span class="fact-value">The Mother of All Demos</span>
-          <span class="fact-sub">90 phút thay đổi ngành điện toán</span>
-        </div>
+        <button class="fact-card fact-card-alt video-teaser" id="engelbartPlayBtn" type="button">
+          <span class="video-teaser-thumb">
+            <img src="assets/img/engelbart-poster.jpg" alt="Khung hình video The Mother of All Demos">
+            <span class="video-teaser-play" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M8 5v14l11-7L8 5Z" fill="currentColor"/></svg>
+            </span>
+          </span>
+          <span class="video-teaser-copy">
+            <span class="fact-label">Sự kiện ra mắt</span>
+            <span class="fact-value">The Mother of All Demos</span>
+            <span class="fact-sub">Xem trích đoạn · 90 phút thay đổi ngành điện toán</span>
+          </span>
+        </button>
       </div>
     </div>
   </section>
@@ -152,15 +160,26 @@
           </div>
         </article>
         <article class="era-panel" data-era="3">
-          <div class="mouse-viewer-wrapper">
-            <model-viewer 
-            src="assets/Mouse1.glb" 
-            camera-controls 
-            interaction-prompt="none"
-            shadow-intensity="1"
-            camera-orbit="45deg 55deg 2.5m"
-            exposure="1.2">
-            </model-viewer>
+          <div class="era-visual">
+            <div class="era-visual-toggle">
+              <button class="era-visual-btn active" data-view="image" type="button">Hình ảnh</button>
+              <button class="era-visual-btn" data-view="model" type="button">Mô hình 3D</button>
+            </div>
+            <div class="era-visual-stage">
+              <img class="era-visual-pane active" data-view="image" src="assets/img/image15.jpg" alt="Chuột công thái học hiện đại">
+              <div class="era-visual-pane" data-view="model">
+                <model-viewer
+                  src="assets/Mouse1.glb"
+                  poster="assets/img/image15.jpg"
+                  camera-controls
+                  interaction-prompt="none"
+                  shadow-intensity="1"
+                  camera-orbit="45deg 55deg 2.5m"
+                  exposure="1.2"
+                  alt="Mô hình 3D chuột công thái học">
+                </model-viewer>
+              </div>
+            </div>
           </div>
           <div class="era-copy">
             <h3>Công thái học &amp; Không dây</h3>
@@ -168,7 +187,6 @@
             <p><strong>Chỉ báo:</strong> cảm biến quang học độ phân giải DPI cực lớn, theo dõi chính xác đến từng pixel; một số tích hợp mặt cảm ứng.</p>
             <p><strong>Phản hồi:</strong> được đánh giá là giải pháp hoàn hảo cho sức khỏe cổ tay khi làm việc nhiều giờ; game thủ hài lòng với tốc độ phản hồi gần như không độ trễ.</p>
           </div>
-          <img src="assets/img/image15.jpg" alt="Chuột công thái học hiện đại">
         </article>
       </div>
     </div>
@@ -484,6 +502,18 @@
 </button>
 
 <nav class="dots" id="dots" aria-label="Điều hướng slide"></nav>
+
+<div class="video-modal" id="engelbartModal" aria-hidden="true">
+  <div class="video-modal-backdrop" id="engelbartBackdrop"></div>
+  <div class="video-modal-dialog" role="dialog" aria-modal="true" aria-label="Video The Mother of All Demos">
+    <button class="video-modal-close" id="engelbartCloseBtn" aria-label="Đóng video">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 5l14 14M19 5 5 19" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+    </button>
+    <video id="engelbartVideo" class="video-modal-video" controls playsinline poster="assets/img/engelbart-poster.jpg">
+      <source src="assets/video/engelbart-demo.mp4" type="video/mp4">
+    </video>
+  </div>
+</div>
 
 <script src="script.js"></script>
 

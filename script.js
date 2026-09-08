@@ -57,6 +57,11 @@
 
   // ---- keyboard navigation ----
   window.addEventListener("keydown", (e) => {
+    const modalOpen = engelbartModal && engelbartModal.classList.contains("is-open");
+    if (modalOpen) {
+      if (e.key === "Escape") closeEngelbartModal();
+      return;
+    }
     if (["ArrowRight", "PageDown", " "].includes(e.key)) {
       e.preventDefault();
       goTo(current + 1);
@@ -91,6 +96,38 @@
   render();
 
   // ============================================================
+  // Mother of All Demos — video modal (Slide "Lịch sử ra đời")
+  // ============================================================
+  const engelbartPlayBtn = document.getElementById("engelbartPlayBtn");
+  const engelbartModal = document.getElementById("engelbartModal");
+  const engelbartBackdrop = document.getElementById("engelbartBackdrop");
+  const engelbartCloseBtn = document.getElementById("engelbartCloseBtn");
+  const engelbartVideo = document.getElementById("engelbartVideo");
+
+  function openEngelbartModal() {
+    if (!engelbartModal || !engelbartVideo) return;
+    engelbartModal.classList.add("is-open");
+    engelbartModal.setAttribute("aria-hidden", "false");
+    engelbartVideo.currentTime = 0;
+    engelbartVideo.muted = false;
+    const playPromise = engelbartVideo.play();
+    if (playPromise && typeof playPromise.catch === "function") {
+      playPromise.catch(() => {});
+    }
+  }
+
+  function closeEngelbartModal() {
+    if (!engelbartModal || !engelbartVideo) return;
+    engelbartModal.classList.remove("is-open");
+    engelbartModal.setAttribute("aria-hidden", "true");
+    engelbartVideo.pause();
+  }
+
+  if (engelbartPlayBtn) engelbartPlayBtn.addEventListener("click", openEngelbartModal);
+  if (engelbartBackdrop) engelbartBackdrop.addEventListener("click", closeEngelbartModal);
+  if (engelbartCloseBtn) engelbartCloseBtn.addEventListener("click", closeEngelbartModal);
+
+  // ============================================================
   // Generic tab-group initializer (classification + usage slides)
   // ============================================================
   function initTabGroup(tabsSelector) {
@@ -120,11 +157,48 @@
     const buttons = Array.from(rail.querySelectorAll(".era-btn"));
     const panels = Array.from(document.querySelectorAll(".era-panel"));
 
-    buttons.forEach((btn) => {
+    // Scrolls the rail itself only (never an outer ancestor) so the given
+    // button is centred — used instead of scrollIntoView, which can walk
+    // up to overflow:hidden ancestors like <body> and shift the whole page.
+    function centerButtonInRail(btn) {
+      const railRect = rail.getBoundingClientRect();
+      const btnRect = btn.getBoundingClientRect();
+      const targetCenter = btnRect.left - railRect.left + btnRect.width / 2;
+      const railCenter = railRect.width / 2;
+      const maxScroll = rail.scrollWidth - rail.clientWidth;
+      const newScroll = Math.max(0, Math.min(maxScroll, rail.scrollLeft + (targetCenter - railCenter)));
+      rail.scrollTo({ left: newScroll, behavior: "smooth" });
+    }
+
+    buttons.forEach((btn, i) => {
       btn.addEventListener("click", () => {
         const key = btn.dataset.era;
         buttons.forEach((b) => b.classList.toggle("active", b === btn));
         panels.forEach((p) => p.classList.toggle("active", p.dataset.era === key));
+
+        // Glide the rail so the next button comes into view — handy on mobile
+        // where the rail scrolls horizontally and swiping can otherwise
+        // accidentally trigger the slide-to-slide swipe gesture instead.
+        centerButtonInRail(buttons[i + 1] || btn);
+      });
+    });
+  })();
+
+  // ============================================================
+  // Era visual toggle — switch between static image and 3D model
+  // (Công thái học & Không dây panel)
+  // ============================================================
+  (function initEraVisualToggles() {
+    const groups = Array.from(document.querySelectorAll(".era-visual"));
+    groups.forEach((group) => {
+      const buttons = Array.from(group.querySelectorAll(".era-visual-btn"));
+      const panes = Array.from(group.querySelectorAll(".era-visual-pane"));
+      buttons.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const view = btn.dataset.view;
+          buttons.forEach((b) => b.classList.toggle("active", b === btn));
+          panes.forEach((p) => p.classList.toggle("active", p.dataset.view === view));
+        });
       });
     });
   })();

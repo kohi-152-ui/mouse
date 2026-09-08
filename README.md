@@ -25,7 +25,19 @@ Bộ slide trình chiếu môn **Tâm lý học Kỹ sư**, chủ đề *Chuột
 - Phím `→` / `←` (hoặc `Space` / `Backspace`) để chuyển slide.
 - Click hai mũi tên tròn hai bên mép màn hình, hoặc các chấm tròn phía dưới.
 - Vuốt trái/phải trên máy cảm ứng.
-- Các thẻ tab (phân loại chuột, 3 loại chuột đang dùng) và dòng thời gian ở slide "Bốn thời kỳ thiết kế" bấm được để đổi nội dung. Slide "BioMorph Mesh" có 4 mục bấm để mở rộng chi tiết.
+- Các thẻ tab (phân loại chuột, 3 loại chuột đang dùng) và dòng thời gian ở slide "Bốn thời kỳ thiết kế" bấm được để đổi nội dung — bấm nút thời kỳ sẽ tự trượt sang nút kế tiếp, tiện thao tác trên điện thoại.
+- Slide "Lịch sử ra đời" có thẻ video "The Mother of All Demos" — bấm vào để mở video có âm thanh trong hộp thoại; nhấn `Esc`, bấm nút X, hoặc bấm ra ngoài để đóng.
+- Panel "Công thái học & Không dây" có nút chuyển giữa "Hình ảnh" và "Mô hình 3D".
+- Slide "BioMorph Mesh" có 4 mục bấm để mở rộng chi tiết.
+
+## ⚠️ File còn thiếu: mô hình 3D
+
+Panel "Công thái học & Không dây" đã nối sẵn khung `<model-viewer>` trỏ tới `assets/Mouse1.glb`, nhưng file này **chưa có** trong dữ liệu đã gửi. Cần bổ sung:
+
+1. Đặt file mô hình 3D (định dạng `.glb`) vào `assets/Mouse1.glb`.
+2. Mở lại bằng Live Server — nút "Mô hình 3D" sẽ hiển thị mô hình ngay, không cần sửa code.
+
+Trước khi có file, bấm nút "Mô hình 3D" sẽ không hiển thị gì (khung trống).
 
 ## Tuỳ chỉnh nhanh
 
