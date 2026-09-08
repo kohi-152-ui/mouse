@@ -197,7 +197,14 @@
 
   // ============================================================
   // History timeline (slide "Lịch sử ra đời") — up/down arrows reveal
-  // one milestone at a time from a collapsed frame ("phóng to" on open)
+  // one milestone at a time from a collapsed frame ("phóng to" on open).
+  //
+  // The outgoing item is collapsed FIRST, and only once that transition
+  // finishes does the incoming item expand. Previously both classes were
+  // toggled in the same tick, so the collapse and the expand animated at
+  // the same time — the items underneath got pushed by two competing
+  // height changes within a frame, which read as a "rung" (shake/jitter),
+  // especially on fast/repeated clicks.
   // ============================================================
   (function initHistoryTimeline() {
     const timeline = document.getElementById("historyTimeline");
@@ -207,23 +214,62 @@
     const prevBtn = document.getElementById("tlPrevBtn");
     const nextBtn = document.getElementById("tlNextBtn");
     let index = Math.max(0, items.findIndex((li) => li.classList.contains("active")));
+    let isCollapsing = false; // true while the outgoing item is mid-collapse
 
-    function render() {
-      items.forEach((li, i) => li.classList.toggle("active", i === index));
+    // Matches .tl-detail's max-height transition duration in style.css —
+    // used as a fallback in case transitionend never fires (backgrounded
+    // tab, reduced-motion settings, etc.) so the UI can't get stuck.
+    const COLLAPSE_FALLBACK_MS = 460;
+
+    function updateNavButtons() {
       if (prevBtn) prevBtn.disabled = index === 0;
       if (nextBtn) nextBtn.disabled = index === items.length - 1;
     }
 
-    function goTo(i) {
-      index = Math.max(0, Math.min(items.length - 1, i));
-      render();
+    function goTo(target) {
+      target = Math.max(0, Math.min(items.length - 1, target));
+      // Ignore clicks on the current item, and while a collapse is still
+      // playing out — this also stops rapid double-clicks from stacking
+      // up multiple pending transitions.
+      if (target === index || isCollapsing) return;
+
+      const outgoing = items[index];
+      const incoming = items[target];
+      const outgoingDetail = outgoing.querySelector(".tl-detail");
+
+      index = target;
+      updateNavButtons();
+
+      // Step 1 — collapse the old item.
+      isCollapsing = true;
+      outgoing.classList.remove("active");
+
+      let opened = false;
+      function openIncoming() {
+        if (opened) return;
+        opened = true;
+        // Step 2 — only now expand the new item.
+        incoming.classList.add("active");
+        isCollapsing = false;
+      }
+
+      if (outgoingDetail) {
+        outgoingDetail.addEventListener("transitionend", function onEnd(e) {
+          if (e.target !== outgoingDetail || e.propertyName !== "max-height") return;
+          outgoingDetail.removeEventListener("transitionend", onEnd);
+          openIncoming();
+        });
+        setTimeout(openIncoming, COLLAPSE_FALLBACK_MS);
+      } else {
+        openIncoming();
+      }
     }
 
     if (prevBtn) prevBtn.addEventListener("click", () => goTo(index - 1));
     if (nextBtn) nextBtn.addEventListener("click", () => goTo(index + 1));
     heads.forEach((head, i) => head.addEventListener("click", () => goTo(i)));
 
-    render();
+    updateNavButtons();
   })();
 
   // ============================================================
