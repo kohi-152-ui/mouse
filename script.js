@@ -196,13 +196,14 @@
   initTabGroup("#useTabs");
 
   // ============================================================
-  // History timeline (slide "Lịch sử ra đời") — up/down arrows move
-  // the "phóng to" focus state between milestones
+  // History timeline (slide "Lịch sử ra đời") — up/down arrows reveal
+  // one milestone at a time from a collapsed frame ("phóng to" on open)
   // ============================================================
   (function initHistoryTimeline() {
     const timeline = document.getElementById("historyTimeline");
     if (!timeline) return;
     const items = Array.from(timeline.querySelectorAll("li"));
+    const heads = Array.from(timeline.querySelectorAll(".tl-head"));
     const prevBtn = document.getElementById("tlPrevBtn");
     const nextBtn = document.getElementById("tlNextBtn");
     let index = Math.max(0, items.findIndex((li) => li.classList.contains("active")));
@@ -211,7 +212,6 @@
       items.forEach((li, i) => li.classList.toggle("active", i === index));
       if (prevBtn) prevBtn.disabled = index === 0;
       if (nextBtn) nextBtn.disabled = index === items.length - 1;
-      items[index].scrollIntoView({ behavior: "smooth", block: "nearest" });
     }
 
     function goTo(i) {
@@ -221,6 +221,7 @@
 
     if (prevBtn) prevBtn.addEventListener("click", () => goTo(index - 1));
     if (nextBtn) nextBtn.addEventListener("click", () => goTo(index + 1));
+    heads.forEach((head, i) => head.addEventListener("click", () => goTo(i)));
 
     render();
   })();
