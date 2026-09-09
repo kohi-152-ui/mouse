@@ -453,7 +453,7 @@
 
       if (hasDoneSurvey) {
         // Đã làm cả khảo sát rồi
-        ratingMsg.textContent = "Cảm ơn bạn đã làm khảo sát. Kết quả thống kê ......";
+        ratingMsg.textContent = "Cảm ơn bạn đã làm khảo sát. Kết quả thống kê sẽ sớm được cập nhật nhé! 💖";
         ratingMsg.style.color = "var(--cyan)";
       } else {
         // Đã cho sao nhưng chưa bấm nút khảo sát
@@ -495,9 +495,9 @@
           localStorage.setItem(STORAGE_KEY, ratingValue);
 
           // Nảy nút khảo sát lên sau 600ms
-          if (surveyBtn) {
+          if (surveyWrapper) {
             setTimeout(() => {
-              surveyBtn.classList.add("is-visible");
+              surveyWrapper.classList.add("is-visible");
             }, 600);
           }
 

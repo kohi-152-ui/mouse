@@ -777,7 +777,7 @@ kbd{
 
 /* Ép toàn bộ nội dung của slide cuối (slide 8) dịch xuống dưới */
 .slide.closing .cover-inner {
-  margin-top: 60px; /* Bạn có thể tăng số 60px này lên (ví dụ 80px, 100px) nếu muốn nó dịch xuống sâu hơn nữa */
+  margin-top: 70px; /* Bạn có thể tăng số 60px này lên (ví dụ 80px, 100px) nếu muốn nó dịch xuống sâu hơn nữa */
 }
 
 /* ============================================================
@@ -836,31 +836,44 @@ kbd{
 }
 .rating-msg.show { opacity: 1; }
 
-
 /* ============================================================
-   NÚT KHẢO SÁT (Hiện ra sau khi đánh giá)
+   KHỐI KHẢO SÁT (Hiện ra sau khi đánh giá)
    ============================================================ */
+.survey-wrapper {
+  display: none; /* Mặc định giấu đi */
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin-top: 8px;
+  animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+.survey-wrapper.is-visible {
+  display: flex; /* Hiện ra khi JS gọi */
+}
+
+.survey-prompt-text {
+  font-size: 14px;
+  color: var(--ink-muted);
+  font-weight: 500;
+  margin: 0;
+}
+
 .survey-btn {
-  display: none; /* Mặc định giấu đi, không chiếm diện tích */
-  margin-top: 4px;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 10px 22px;
+  padding: 10px 26px;
   border-radius: 999px;
   background: var(--surface-glass);
-  border: 1px solid var(--violet);
+  border: 1.5px solid var(--violet);
   color: var(--violet);
   font-family: var(--font-body);
-  font-size: 13.5px;
+  font-size: 14px;
   font-weight: 600;
   text-decoration: none;
   box-shadow: 0 4px 12px rgba(123,92,250, 0.15);
-  transition: transform 200ms ease, background 200ms ease, color 200ms ease;
-  animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; /* Hiệu ứng nảy lên cute */
-}
-
-.survey-btn.is-visible {
-  display: inline-flex; /* JS gọi class này thì nút mới hiện */
+  transition: transform 200ms ease, background 200ms ease, color 200ms ease, box-shadow 200ms ease;
 }
 
 .survey-btn:hover {
