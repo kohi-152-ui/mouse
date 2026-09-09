@@ -404,6 +404,7 @@
     const starRating = document.getElementById("starRating");
     const ratingMsg = document.getElementById("ratingMsg");
     const surveyBtn = document.getElementById("surveyBtn"); 
+    const surveyWrapper = document.getElementById("surveyWrapper");
     
     if (!starRating || !ratingMsg) return;
 
