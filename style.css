@@ -891,18 +891,26 @@ kbd{
 
 .slide.closing {
   align-items: flex-start !important; /* Căn từ trên xuống thay vì căn giữa */
-  padding-top: 40px !important;       /* Khoảng cách đẩy từ mép trên màn hình xuống */
+  padding-top: 25px !important;       /* Khoảng cách đẩy từ mép trên màn hình xuống */
 }
 
 
 /* ============================================================
-   NÚT VÀ POPUP QR CODE KHẢO SÁT
+   SURVEY ACTIONS & FULL-SCREEN QR
    ============================================================ */
+/* Xếp dọc 2 nút và chữ "hoặc" ở giữa */
 .survey-actions {
-  display: inline-flex;
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 12px;
-  flex-wrap: wrap;
+  gap: 8px;
+  width: 100%;
+  max-width: 280px;
+  margin-top: 4px;
+}
+
+.survey-actions .survey-btn {
+  width: 100%;
   justify-content: center;
 }
 
@@ -910,13 +918,7 @@ kbd{
   font-size: 13.5px;
   font-weight: 600;
   color: var(--ink-faint);
-}
-
-.btn-qr {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  cursor: pointer;
+  margin: 2px 0;
 }
 
 /* Modal Popup QR */
@@ -927,80 +929,85 @@ kbd{
   display: none;
   align-items: center;
   justify-content: center;
-  padding: 20px;
+  padding: 24px;
 }
+
 .qr-modal.is-open {
   display: flex;
 }
+
 .qr-backdrop {
   position: absolute;
   inset: 0;
-  background: rgba(5, 8, 15, 0.75);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
+  background: rgba(5, 8, 15, 0.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
+
 .qr-card {
   position: relative;
   z-index: 1;
-  background: var(--surface);
-  border: 1px solid var(--line-strong);
-  border-radius: var(--radius-lg);
-  padding: 30px 26px 24px;
-  text-align: center;
+  background: transparent;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  box-shadow: 0 30px 60px -15px rgba(0,0,0,0.5);
+  justify-content: center;
   animation: qrPop 240ms var(--ease-smooth);
-  max-width: 320px;
-  width: 100%;
 }
+
 @keyframes qrPop {
-  from { opacity: 0; transform: scale(0.92); }
+  from { opacity: 0; transform: scale(0.9); }
   to { opacity: 1; transform: scale(1); }
 }
+
+/* Nút tắt X cố định ở góc màn hình */
 .qr-close {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  width: 30px;
-  height: 30px;
+  position: fixed;
+  top: 24px;
+  right: 28px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
-  border: 1px solid var(--line);
-  background: var(--surface-glass);
-  color: var(--ink-muted);
-  font-size: 13px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(8px);
+  color: #fff;
+  font-size: 18px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   transition: all 200ms ease;
+  z-index: 2;
 }
+
 .qr-close:hover {
-  background: var(--line-strong);
-  color: var(--ink);
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.08);
 }
+
+/* Khung nền trắng bo góc bọc quanh QR */
 .qr-code-wrap {
   background: #ffffff;
-  padding: 12px;
-  border-radius: 14px;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
-  display: inline-block;
-  margin-bottom: 14px;
+  padding: 24px;
+  border-radius: 28px;
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.7);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
+
+/* Mã QR căng tràn màn hình máy tính (chiếm tới 75% chiều cao màn hình) */
 .qr-img {
-  width: 200px;
-  height: 200px;
+  width: min(75vh, 75vw);
+  height: min(75vh, 75vw);
+  max-width: 560px;
+  max-height: 560px;
   display: block;
 }
-.qr-title {
-  font-family: var(--font-display);
-  font-size: 15.5px;
-  font-weight: 700;
-  color: var(--ink);
-  margin-bottom: 4px;
-}
-.qr-sub {
-  font-size: 12.5px;
-  color: var(--ink-faint);
+
+@media (max-width: 560px) {
+  .qr-img {
+    width: 82vw;
+    height: 82vw;
+  }
 }
