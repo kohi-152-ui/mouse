@@ -775,6 +775,10 @@ kbd{
               opacity 380ms var(--ease-smooth), transform 260ms var(--ease-smooth);
 }
 
+/* Ép toàn bộ nội dung của slide cuối (slide 8) dịch xuống dưới */
+.slide.closing .cover-inner {
+  margin-top: 60px; /* Bạn có thể tăng số 60px này lên (ví dụ 80px, 100px) nếu muốn nó dịch xuống sâu hơn nữa */
+}
 
 /* ============================================================
    STAR RATING (Slide 8)
@@ -831,3 +835,43 @@ kbd{
   transition: opacity 300ms ease;
 }
 .rating-msg.show { opacity: 1; }
+
+
+/* ============================================================
+   NÚT KHẢO SÁT (Hiện ra sau khi đánh giá)
+   ============================================================ */
+.survey-btn {
+  display: none; /* Mặc định giấu đi, không chiếm diện tích */
+  margin-top: 4px;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 22px;
+  border-radius: 999px;
+  background: var(--surface-glass);
+  border: 1px solid var(--violet);
+  color: var(--violet);
+  font-family: var(--font-body);
+  font-size: 13.5px;
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: 0 4px 12px rgba(123,92,250, 0.15);
+  transition: transform 200ms ease, background 200ms ease, color 200ms ease;
+  animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; /* Hiệu ứng nảy lên cute */
+}
+
+.survey-btn.is-visible {
+  display: inline-flex; /* JS gọi class này thì nút mới hiện */
+}
+
+.survey-btn:hover {
+  background: var(--violet);
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px -8px rgba(123,92,250, 0.6);
+}
+
+/* Hiệu ứng trồi lên */
+@keyframes popIn {
+  0% { opacity: 0; transform: translateY(10px) scale(0.9); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}

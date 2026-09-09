@@ -398,39 +398,77 @@
 
 
 // ============================================================
-  // Auto-Submit Star Rating (Slide 8) - Có chống Spam bằng LocalStorage
+  // Auto-Submit Star Rating (Slide 8)
   // ============================================================
   (function initStarRating() {
     const starRating = document.getElementById("starRating");
     const ratingMsg = document.getElementById("ratingMsg");
+    const surveyBtn = document.getElementById("surveyBtn"); 
+    
     if (!starRating || !ratingMsg) return;
 
     const stars = Array.from(starRating.querySelectorAll(".star-btn"));
-    
-    // !!! QUAN TRỌNG: Dán URL Web App của Google Apps Script vào đây !!!
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzbuVIiQDR01BXyYG-7vKxqCp3lNuFPGpL6DC8p5cuqZZ-jn2WKUQmTTmtlcmcrYOLB/exec"; 
     
     const STORAGE_KEY = "hasRatedMouseDeck"; 
+    const SURVEY_KEY = "hasDoneSurveyMouseDeck"; // Thẻ nhớ mới để lưu trạng thái đã làm khảo sát
 
-    // 1. Kiểm tra bộ nhớ tạm khi tải trang
+    // --- HÀM XỬ LÝ KHI NGƯỜI DÙNG QUAY LẠI TỪ TAB KHẢO SÁT ---
+    function handleSurveyReturn() {
+      // Đổi câu thông báo theo ý bạn
+      ratingMsg.textContent = "Cảm ơn bạn đã làm khảo sát. Kết quả thống kê sẽ sớm được cập nhật nhé! 💖";
+      ratingMsg.style.color = "var(--cyan)";
+      
+      // Ẩn cái nút khảo sát đi vì họ đã làm xong rồi
+      if (surveyBtn) surveyBtn.style.display = "none"; 
+      
+      // Lưu lại vào trình duyệt để lần sau họ F5 trang cũng không bị đòi làm lại khảo sát
+      localStorage.setItem(SURVEY_KEY, "true"); 
+    }
+
+    // Lắng nghe sự kiện click vào nút khảo sát
+    if (surveyBtn) {
+      surveyBtn.addEventListener("click", () => {
+        // Đợi 1 giây để trình duyệt kịp nhảy sang tab Google Form, sau đó mới bắt đầu "canh"
+        setTimeout(() => {
+          // Lắng nghe sự kiện 'focus' (khi tab slide này sáng lên lại do người dùng quay về)
+          window.addEventListener("focus", function onFocus() {
+            handleSurveyReturn();
+            // Xóa bộ canh sự kiện này đi để nó chỉ chạy đúng 1 lần
+            window.removeEventListener("focus", onFocus);
+          }, { once: true });
+        }, 1000);
+      });
+    }
+
+    // 1. Kiểm tra bộ nhớ tạm (Người cũ đã vào lại)
     const savedRating = localStorage.getItem(STORAGE_KEY);
+    const hasDoneSurvey = localStorage.getItem(SURVEY_KEY);
+
     if (savedRating) {
       starRating.classList.add("is-disabled"); 
       const targetStar = stars.find(s => s.dataset.val === savedRating);
       if (targetStar) targetStar.classList.add("is-selected");
-
-      ratingMsg.textContent = "Bạn đã đánh giá " + savedRating + " sao. Cảm ơn bạn! 💖";
-      ratingMsg.style.color = "var(--cyan)";
       ratingMsg.classList.add("show");
-      return; // Khóa chức năng
+
+      if (hasDoneSurvey) {
+        // Đã làm cả khảo sát rồi
+        ratingMsg.textContent = "Cảm ơn bạn đã làm khảo sát. Kết quả thống kê ......";
+        ratingMsg.style.color = "var(--cyan)";
+      } else {
+        // Đã cho sao nhưng chưa bấm nút khảo sát
+        ratingMsg.textContent = "Bạn đã đánh giá " + savedRating + " sao. Cảm ơn bạn! 💖";
+        ratingMsg.style.color = "var(--cyan)";
+        if (surveyBtn) surveyBtn.classList.add("is-visible");
+      }
+      return; 
     }
 
-    // 2. Nếu chưa đánh giá, bật chức năng lắng nghe nút bấm
+    // 2. Lắng nghe nút bấm (Người mới)
     stars.forEach(star => {
       star.addEventListener("click", async () => {
         const ratingValue = star.dataset.val;
 
-        // Cập nhật giao diện lập tức
         starRating.classList.add("is-disabled");
         stars.forEach(s => s.classList.remove("is-selected"));
         star.classList.add("is-selected");
@@ -439,28 +477,31 @@
         ratingMsg.style.color = "var(--ink-muted)";
         ratingMsg.classList.add("show");
 
-        // Gửi qua API
         try {
           await fetch(SCRIPT_URL, {
             method: "POST",
             mode: "no-cors",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-              name: "Khách xem Slide",
+              studentId: "Không",
+              name: "Khách Ẩn Danh", 
               rating: ratingValue,
-              feedback: "Đánh giá nhanh qua nút sao cuối Slide"
+              feedback: "Đánh giá 1-click cuối Slide"
             })
           });
 
-          // Hoàn thành xuất sắc
           ratingMsg.textContent = "Cảm ơn bạn đã đánh giá " + ratingValue + " sao! 💖";
           ratingMsg.style.color = "var(--cyan)";
-
-          // Lưu trạng thái vào trình duyệt
           localStorage.setItem(STORAGE_KEY, ratingValue);
 
+          // Nảy nút khảo sát lên sau 600ms
+          if (surveyBtn) {
+            setTimeout(() => {
+              surveyBtn.classList.add("is-visible");
+            }, 600);
+          }
+
         } catch (error) {
-          // Báo lỗi nhưng vẫn giữ được thiết kế 
           ratingMsg.textContent = "Có lỗi kết nối, nhưng hệ thống đã ghi nhận!";
           ratingMsg.style.color = "var(--magenta)";
           starRating.classList.remove("is-disabled"); 
