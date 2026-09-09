@@ -891,5 +891,116 @@ kbd{
 
 .slide.closing {
   align-items: flex-start !important; /* Căn từ trên xuống thay vì căn giữa */
-  padding-top: 75px !important;       /* Khoảng cách đẩy từ mép trên màn hình xuống */
+  padding-top: 40px !important;       /* Khoảng cách đẩy từ mép trên màn hình xuống */
+}
+
+
+/* ============================================================
+   NÚT VÀ POPUP QR CODE KHẢO SÁT
+   ============================================================ */
+.survey-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.survey-or {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--ink-faint);
+}
+
+.btn-qr {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+/* Modal Popup QR */
+.qr-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.qr-modal.is-open {
+  display: flex;
+}
+.qr-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(5, 8, 15, 0.75);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+.qr-card {
+  position: relative;
+  z-index: 1;
+  background: var(--surface);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-lg);
+  padding: 30px 26px 24px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 30px 60px -15px rgba(0,0,0,0.5);
+  animation: qrPop 240ms var(--ease-smooth);
+  max-width: 320px;
+  width: 100%;
+}
+@keyframes qrPop {
+  from { opacity: 0; transform: scale(0.92); }
+  to { opacity: 1; transform: scale(1); }
+}
+.qr-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: var(--surface-glass);
+  color: var(--ink-muted);
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 200ms ease;
+}
+.qr-close:hover {
+  background: var(--line-strong);
+  color: var(--ink);
+}
+.qr-code-wrap {
+  background: #ffffff;
+  padding: 12px;
+  border-radius: 14px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+  display: inline-block;
+  margin-bottom: 14px;
+}
+.qr-img {
+  width: 200px;
+  height: 200px;
+  display: block;
+}
+.qr-title {
+  font-family: var(--font-display);
+  font-size: 15.5px;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+.qr-sub {
+  font-size: 12.5px;
+  color: var(--ink-faint);
 }

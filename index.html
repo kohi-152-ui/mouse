@@ -552,9 +552,35 @@
 
         <div id="surveyWrapper" class="survey-wrapper">
           <p class="survey-prompt-text">Đã lỡ cho sao rồi thì làm giúp tụi mình cái khảo sát luôn nha 🥺</p>
-          <a href="https://docs.google.com/forms/d/e/1FAIpQLSc1eE2p9sBARXkap15F3fEYVyiyKaT-CjM1nnKTns0irsNSWg/viewform" target="_blank" rel="noopener noreferrer" id="surveyBtn" class="survey-btn">
-            Đi tới form khảo sát
-          </a>
+          
+          <div class="survey-actions">
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSc1eE2p9sBARXkap15F3fEYVyiyKaT-CjM1nnKTns0irsNSWg/viewform" target="_blank" rel="noopener noreferrer" id="surveyBtn" class="survey-btn">
+              Đi tới form khảo sát
+            </a>
+            <span class="survey-or">hoặc</span>
+            <button type="button" id="qrBtn" class="survey-btn btn-qr">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="7" height="7"></rect>
+                <rect x="14" y="3" width="7" height="7"></rect>
+                <rect x="14" y="14" width="7" height="7"></rect>
+                <rect x="3" y="14" width="7" height="7"></rect>
+              </svg>
+              SCAN QR CODE
+            </button>
+          </div>
+        </div>
+        <!-- HỘP THOẠI POPUP QR CODE -->
+        <div class="qr-modal" id="qrModal" aria-hidden="true">
+          <div class="qr-backdrop" id="qrBackdrop"></div>
+          <div class="qr-card">
+            <button class="qr-close" id="qrClose" type="button" aria-label="Đóng">✕</button>
+            <div class="qr-code-wrap">
+              <!-- API tự động tạo ảnh QR đúng theo link Google Form của bạn -->
+              <img src="https://api.qrserver.com/v1/create-qr-code/?size=240x240&data=https%3A%2F%2Fdocs.google.com%2Fforms%2Fd%2Fe%2F1FAIpQLSc1eE2p9sBARXkap15F3fEYVyiyKaT-CjM1nnKTns0irsNSWg%2Fviewform" alt="QR Code Khảo sát" class="qr-img">
+            </div>
+            <p class="qr-title">Quét mã bằng điện thoại</p>
+            <p class="qr-sub">Để mở nhanh form khảo sát</p>
+          </div>
         </div>
       </div>
       <!-- DISCLAIMER TEXT -->

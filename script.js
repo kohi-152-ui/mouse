@@ -482,3 +482,37 @@
       });
     });
   })();
+
+
+  // Bật/tắt Popup QR Code khi bấm nút
+(function initQrModal() {
+  const qrBtn = document.getElementById("qrBtn");
+  const qrModal = document.getElementById("qrModal");
+  const qrBackdrop = document.getElementById("qrBackdrop");
+  const qrClose = document.getElementById("qrClose");
+
+  function openQr() {
+    if (qrModal) {
+      qrModal.classList.add("is-open");
+      qrModal.setAttribute("aria-hidden", "false");
+    }
+  }
+
+  function closeQr() {
+    if (qrModal) {
+      qrModal.classList.remove("is-open");
+      qrModal.setAttribute("aria-hidden", "true");
+    }
+  }
+
+  if (qrBtn) qrBtn.addEventListener("click", openQr);
+  if (qrBackdrop) qrBackdrop.addEventListener("click", closeQr);
+  if (qrClose) qrClose.addEventListener("click", closeQr);
+
+  // Nhấn phím Escape để đóng nhanh
+  window.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && qrModal && qrModal.classList.contains("is-open")) {
+      closeQr();
+    }
+  });
+})();
