@@ -395,3 +395,76 @@
     });
   })();
 })();
+
+
+// ============================================================
+  // Auto-Submit Star Rating (Slide 8) - Có chống Spam bằng LocalStorage
+  // ============================================================
+  (function initStarRating() {
+    const starRating = document.getElementById("starRating");
+    const ratingMsg = document.getElementById("ratingMsg");
+    if (!starRating || !ratingMsg) return;
+
+    const stars = Array.from(starRating.querySelectorAll(".star-btn"));
+    
+    // !!! QUAN TRỌNG: Dán URL Web App của Google Apps Script vào đây !!!
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzbuVIiQDR01BXyYG-7vKxqCp3lNuFPGpL6DC8p5cuqZZ-jn2WKUQmTTmtlcmcrYOLB/exec"; 
+    
+    const STORAGE_KEY = "hasRatedMouseDeck"; 
+
+    // 1. Kiểm tra bộ nhớ tạm khi tải trang
+    const savedRating = localStorage.getItem(STORAGE_KEY);
+    if (savedRating) {
+      starRating.classList.add("is-disabled"); 
+      const targetStar = stars.find(s => s.dataset.val === savedRating);
+      if (targetStar) targetStar.classList.add("is-selected");
+
+      ratingMsg.textContent = "Bạn đã đánh giá " + savedRating + " sao. Cảm ơn bạn! 💖";
+      ratingMsg.style.color = "var(--cyan)";
+      ratingMsg.classList.add("show");
+      return; // Khóa chức năng
+    }
+
+    // 2. Nếu chưa đánh giá, bật chức năng lắng nghe nút bấm
+    stars.forEach(star => {
+      star.addEventListener("click", async () => {
+        const ratingValue = star.dataset.val;
+
+        // Cập nhật giao diện lập tức
+        starRating.classList.add("is-disabled");
+        stars.forEach(s => s.classList.remove("is-selected"));
+        star.classList.add("is-selected");
+        
+        ratingMsg.textContent = "Đang gửi đánh giá...";
+        ratingMsg.style.color = "var(--ink-muted)";
+        ratingMsg.classList.add("show");
+
+        // Gửi qua API
+        try {
+          await fetch(SCRIPT_URL, {
+            method: "POST",
+            mode: "no-cors",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              name: "Khách xem Slide",
+              rating: ratingValue,
+              feedback: "Đánh giá nhanh qua nút sao cuối Slide"
+            })
+          });
+
+          // Hoàn thành xuất sắc
+          ratingMsg.textContent = "Cảm ơn bạn đã đánh giá " + ratingValue + " sao! 💖";
+          ratingMsg.style.color = "var(--cyan)";
+
+          // Lưu trạng thái vào trình duyệt
+          localStorage.setItem(STORAGE_KEY, ratingValue);
+
+        } catch (error) {
+          // Báo lỗi nhưng vẫn giữ được thiết kế 
+          ratingMsg.textContent = "Có lỗi kết nối, nhưng hệ thống đã ghi nhận!";
+          ratingMsg.style.color = "var(--magenta)";
+          starRating.classList.remove("is-disabled"); 
+        }
+      });
+    });
+  })();
