@@ -777,7 +777,7 @@ kbd{
 
 /* Ép toàn bộ nội dung của slide cuối (slide 8) dịch xuống dưới */
 .slide.closing .cover-inner {
-  margin-top: 70px; /* Bạn có thể tăng số 60px này lên (ví dụ 80px, 100px) nếu muốn nó dịch xuống sâu hơn nữa */
+  margin-top: 60px; /* Bạn có thể tăng số 60px này lên (ví dụ 80px, 100px) nếu muốn nó dịch xuống sâu hơn nữa */
 }
 
 /* ============================================================
