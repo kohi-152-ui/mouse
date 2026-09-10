@@ -891,7 +891,7 @@ kbd{
 
 .slide.closing {
   align-items: flex-start !important; /* Căn từ trên xuống thay vì căn giữa */
-  padding-top: 25px !important;       /* Khoảng cách đẩy từ mép trên màn hình xuống */
+  padding-top: 15px !important;       /* Khoảng cách đẩy từ mép trên màn hình xuống */
 }
 
 
