@@ -570,6 +570,17 @@
               SCAN QR CODE
             </button>
           </div>
+
+          <!-- ASTEROID DODGE — bonus mini-game, appears once feedback is given -->
+          <button type="button" id="adOpenBtn" class="ad-cta">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <circle cx="9.5" cy="14.5" r="5.6" fill="currentColor"/>
+              <circle cx="7.6" cy="12.6" r="0.9" fill="#1a1024" opacity="0.45"/>
+              <circle cx="11.2" cy="16.1" r="0.7" fill="#1a1024" opacity="0.45"/>
+              <path d="M16.3 3.6l1.15 2.55L20 7.3l-2.55 1.15L16.3 11l-1.15-2.55L12.6 7.3l2.55-1.15L16.3 3.6z" fill="currentColor"/>
+            </svg>
+            <span>Asteroid Dodge</span>
+          </button>
         </div>
         <!-- HỘP THOẠI POPUP QR CODE -->
         <div class="qr-modal" id="qrModal" aria-hidden="true">
@@ -609,6 +620,70 @@
     <video id="engelbartVideo" class="video-modal-video" controls playsinline poster="assets/img/engelbart-poster.jpg">
       <source src="assets/video/engelbart-demo.mp4" type="video/mp4">
     </video>
+  </div>
+</div>
+
+<!-- ASTEROID DODGE — fullscreen night-sky mini-game (slide "Từ gỗ & bi lăn...") -->
+<div class="ad-modal" id="asteroidModal" aria-hidden="true">
+  <div class="ad-backdrop" id="adBackdrop"></div>
+  <div class="ad-dialog" role="dialog" aria-modal="true" aria-label="Game Asteroid Dodge">
+    <button class="ad-close" id="adCloseBtn" aria-label="Đóng game">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 5l14 14M19 5 5 19" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+    </button>
+
+    <!-- Screen 1: Intro -->
+    <div class="ad-screen ad-intro is-active" id="adIntro">
+      <span class="ad-intro-icon">
+        <svg width="36" height="36" viewBox="0 0 24 24" fill="none">
+          <circle cx="10" cy="14" r="6.4" fill="currentColor"/>
+          <circle cx="7.6" cy="11.6" r="1" fill="#0a0e1c" opacity="0.5"/>
+          <circle cx="12.2" cy="16.4" r="0.8" fill="#0a0e1c" opacity="0.5"/>
+          <path d="M17 3.4l1.3 2.9 2.9 1.3-2.9 1.3-1.3 2.9-1.3-2.9-2.9-1.3 2.9-1.3L17 3.4z" fill="currentColor"/>
+        </svg>
+      </span>
+      <h3>Asteroid Dodge</h3>
+      <p class="ad-intro-lead">Né các <strong>thiên thạch</strong> lao tới từ phía trên, gom <strong>xu</strong> để ghi điểm. Thiên thạch sẽ ngày càng nhanh hơn theo thời gian - chạm vào là endgame!</p>
+      <ul class="ad-intro-steps">
+        <li><strong>Trên máy tính:</strong> di chuyển chuột qua lại trong khung để né.</li>
+        <li><strong>Trên điện thoại:</strong> chạm và kéo ngón tay qua lại.</li>
+        <li>Chúc bạn chơi vui vẻ!</li>
+      </ul>
+      <button class="ad-btn-primary" id="adStartBtn" type="button">
+        <span>Bắt đầu chơi</span>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+
+    <!-- Screen 2: Arena -->
+    <div class="ad-screen ad-arena-screen" id="adArenaScreen">
+      <div class="ad-hud">
+        <span class="ad-hud-chip" id="adHudTime">0.0s</span>
+        <span class="ad-hud-chip ad-hud-score" id="adHudScore">Điểm: 0</span>
+      </div>
+      <div class="ad-arena" id="adArena">
+        <div class="ad-player" id="adPlayer"></div>
+      </div>
+      <p class="ad-arena-hint">Di chuột (hoặc kéo ngón tay) qua lại để né</p>
+    </div>
+
+    <!-- Screen 3: Game over -->
+    <div class="ad-screen ad-results" id="adResults">
+      <h3>💥 Va chạm!</h3>
+      <div class="ad-metrics-grid">
+        <div class="ad-metric">
+          <span class="ad-metric-value" id="adResultTime">--</span>
+          <span class="ad-metric-label">Thời gian sống sót (giây)</span>
+        </div>
+        <div class="ad-metric">
+          <span class="ad-metric-value" id="adResultScore">--</span>
+          <span class="ad-metric-label">Điểm số (tiền vàng)</span>
+        </div>
+      </div>
+      <div class="ad-results-actions">
+        <button class="ad-btn-ghost" id="adRetryBtn" type="button">Chơi lại</button>
+        <button class="ad-btn-primary" id="adExitBtn" type="button">Thoát</button>
+      </div>
+    </div>
   </div>
 </div>
 

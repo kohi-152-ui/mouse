@@ -30,6 +30,22 @@ Bộ slide trình chiếu môn **Tâm lý học Kỹ sư**, chủ đề *Chuột
 - Slide "Lịch sử ra đời" có thẻ video "The Mother of All Demos" — bấm vào để mở video có âm thanh trong hộp thoại; nhấn `Esc`, bấm nút X, hoặc bấm ra ngoài để đóng.
 - Panel "Công thái học & Không dây" có nút chuyển giữa "Hình ảnh" và "Mô hình 3D".
 - Slide "BioMorph Mesh" có 4 mục bấm để mở rộng chi tiết.
+- Slide cuối (feedback) sau khi đánh giá sao sẽ hiện thêm nút **Chơi: Asteroid Dodge** — xem mục riêng bên dưới.
+
+## Game: Asteroid Dodge
+
+Nút "Chơi: Asteroid Dodge" nằm trong khối khảo sát ở slide cuối — chỉ xuất hiện **sau khi bạn đã bấm đánh giá sao**, ngay dưới 2 nút "Đi tới form khảo sát" / "SCAN QR CODE". Bấm vào để mở cửa sổ toàn màn hình, nền bầu trời đêm (cố định, không đổi theo Pastel/Dark của trang chính — dùng chung ảnh nền sao với các hiệu ứng khác, file `assets/img/night-sky-stars.svg`, đã có sẵn):
+
+1. **Giới thiệu** — giải thích cách chơi, có nút "Bắt đầu chơi".
+2. **Khung chơi** — một ô chữ nhật (co giãn theo màn hình), người chơi là mũi tàu nhỏ ở cạnh dưới:
+   - **Trên máy tính**: di chuột qua lại trong khung để né.
+   - **Trên điện thoại**: chạm và kéo ngón tay qua lại.
+   - **Thiên thạch** (khối xám) rơi từ trên xuống — chạm vào là **kết thúc ngay lập tức**.
+   - **Đồng tiền vàng** rơi xen kẽ — chạm vào để **+10 điểm**.
+   - Tốc độ rơi và tần suất xuất hiện của thiên thạch **tăng dần** theo thời gian sống sót (có giới hạn trần để vẫn chơi được, không tăng vô hạn).
+3. **Kết thúc** — hiện "Thời gian sống sót (giây)" và "Điểm số (tiền vàng)", kèm nút "Chơi lại" và "Thoát". Đóng được bằng nút X, phím `Esc`, hoặc bấm ra ngoài — khi cửa sổ này mở, phím mũi tên/space sẽ không làm chuyển slide nữa.
+
+Muốn chỉnh độ khó (tốc độ ban đầu, tốc độ tăng theo giây, tần suất xuất hiện, tỉ lệ tiền vàng/thiên thạch...), sửa các hằng số ở đầu khối `initAsteroidDodge` trong `script.js`: `BASE_FALL_SPEED`, `MAX_FALL_SPEED_BONUS`, `SPEED_RAMP_PER_SEC`, `BASE_SPAWN_INTERVAL`, `MIN_SPAWN_INTERVAL`, `SPAWN_RAMP_PER_SEC`, `COIN_CHANCE`.
 
 ## Thanh tiến trình tự ẩn
 
@@ -75,6 +91,7 @@ Trước khi có đủ file, bấm nút "Mô hình 3D" sẽ không hiển thị 
 - **Đổi nội dung chữ**: sửa trực tiếp trong `index.html`, mỗi slide nằm trong một thẻ `<section class="slide">`.
 - **Đổi/thêm ảnh**: bỏ ảnh mới vào `assets/img/`, rồi sửa đường dẫn `src="assets/img/...">` tương ứng.
 - **Thêm slide mới**: copy một khối `<section class="slide" data-index="N">...</section>`, đổi số `data-index` tăng dần, script sẽ tự nhận diện (không cần sửa `script.js`).
+- **Chỉnh độ khó Asteroid Dodge**: các hằng số ở đầu khối `initAsteroidDodge` trong `script.js` (xem mục "Game: Asteroid Dodge" ở trên).
 
 ## Yêu cầu mạng
 

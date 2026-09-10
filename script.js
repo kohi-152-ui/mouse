@@ -516,3 +516,257 @@
     }
   });
 })();
+
+// ============================================================
+// ASTEROID DODGE — bonus mini-game (slide "closing")
+// Player (bottom of the arena) moves left/right with the mouse
+// (or a finger drag) to dodge falling asteroids and collect
+// coins. Asteroid speed & spawn rate ramp up with survival time;
+// touching an asteroid ends the run immediately.
+// ============================================================
+(function initAsteroidDodge() {
+  const openBtn = document.getElementById("adOpenBtn");
+  const modal = document.getElementById("asteroidModal");
+  if (!openBtn || !modal) return;
+
+  const backdrop = document.getElementById("adBackdrop");
+  const closeBtn = document.getElementById("adCloseBtn");
+  const startBtn = document.getElementById("adStartBtn");
+  const retryBtn = document.getElementById("adRetryBtn");
+  const exitBtn = document.getElementById("adExitBtn");
+  const arena = document.getElementById("adArena");
+  const player = document.getElementById("adPlayer");
+  const hudTime = document.getElementById("adHudTime");
+  const hudScore = document.getElementById("adHudScore");
+  const screens = {
+    intro: document.getElementById("adIntro"),
+    arena: document.getElementById("adArenaScreen"),
+    results: document.getElementById("adResults")
+  };
+  const resultEls = {
+    time: document.getElementById("adResultTime"),
+    score: document.getElementById("adResultScore")
+  };
+
+  // --- Tuning knobs -----------------------------------------------------
+  const PLAYER_RADIUS = 16;
+  const PLAYER_BOTTOM_OFFSET = 16 + 19; // css "bottom" + half player height
+  const BASE_FALL_SPEED = 110; // px/second
+  const MAX_FALL_SPEED_BONUS = 260; // px/second, added gradually then capped
+  const SPEED_RAMP_PER_SEC = 5.5; // how fast the speed bonus grows
+  const BASE_SPAWN_INTERVAL = 950; // ms between spawns at the very start
+  const MIN_SPAWN_INTERVAL = 380; // ms floor — keeps it beatable
+  const SPAWN_RAMP_PER_SEC = 11; // how fast the interval shrinks
+  const COIN_CHANCE = 0.32; // fraction of spawns that are coins, not asteroids
+
+  let arenaW = 460;
+  let arenaH = 620;
+  let playerX = 0;
+  let running = false;
+  let rafId = null;
+  let lastFrameTime = 0;
+  let elapsedMs = 0;
+  let spawnAccumulator = 0;
+  let score = 0;
+  let objects = []; // { el, x, y, r, type, spin }
+
+  function showScreen(name) {
+    Object.keys(screens).forEach((k) => {
+      if (screens[k]) screens[k].classList.toggle("is-active", k === name);
+    });
+  }
+
+  function openModal() {
+    modal.classList.add("is-open");
+    modal.setAttribute("aria-hidden", "false");
+    showScreen("intro");
+  }
+
+  function closeModal() {
+    stopGame();
+    modal.classList.remove("is-open");
+    modal.setAttribute("aria-hidden", "true");
+  }
+
+  function measureArena() {
+    arenaW = arena.clientWidth || arenaW;
+    arenaH = arena.clientHeight || arenaH;
+  }
+
+  function setPlayerX(x) {
+    playerX = Math.max(PLAYER_RADIUS, Math.min(arenaW - PLAYER_RADIUS, x));
+    player.style.left = playerX + "px";
+  }
+
+  function onPointerMove(clientX) {
+    if (!running) return;
+    const rect = arena.getBoundingClientRect();
+    setPlayerX(clientX - rect.left);
+  }
+
+  function handleMouseMove(e) {
+    onPointerMove(e.clientX);
+  }
+  function handleTouchMove(e) {
+    if (!running) return;
+    if (e.touches && e.touches[0]) {
+      e.preventDefault();
+      onPointerMove(e.touches[0].clientX);
+    }
+  }
+
+  function spawnObject() {
+    const isCoin = Math.random() < COIN_CHANCE;
+    const r = isCoin ? 12 + Math.random() * 3 : 15 + Math.random() * 9;
+    const x = r + Math.random() * (arenaW - r * 2);
+
+    const el = document.createElement("div");
+    el.className = isCoin ? "ad-coin" : "ad-asteroid";
+    el.style.width = r * 2 + "px";
+    el.style.height = r * 2 + "px";
+    el.style.left = x - r + "px";
+    el.style.top = -r * 2 + "px";
+    arena.appendChild(el);
+
+    objects.push({
+      el,
+      x,
+      y: -r,
+      r,
+      type: isCoin ? "coin" : "asteroid",
+      speedMult: isCoin ? 0.85 : 0.9 + Math.random() * 0.3
+    });
+  }
+
+  function spark(className, x, y, size) {
+    const el = document.createElement("div");
+    el.className = className;
+    el.style.left = x + "px";
+    el.style.top = y + "px";
+    if (size) {
+      el.style.width = size + "px";
+      el.style.height = size + "px";
+    }
+    arena.appendChild(el);
+    el.addEventListener("animationend", () => el.remove());
+  }
+
+  function updateHud() {
+    if (hudTime) hudTime.textContent = (elapsedMs / 1000).toFixed(1) + "s";
+    if (hudScore) hudScore.textContent = "Điểm: " + score;
+  }
+
+  function endRun() {
+    stopGame();
+    if (resultEls.time) resultEls.time.textContent = (elapsedMs / 1000).toFixed(1);
+    if (resultEls.score) resultEls.score.textContent = String(score);
+    showScreen("results");
+  }
+
+  function loop(timestamp) {
+    if (!running) return;
+    const dt = Math.min(timestamp - lastFrameTime, 48); // clamp huge gaps (tab switch, etc.)
+    lastFrameTime = timestamp;
+    elapsedMs += dt;
+
+    const elapsedSec = elapsedMs / 1000;
+    const speed = BASE_FALL_SPEED + Math.min(elapsedSec * SPEED_RAMP_PER_SEC, MAX_FALL_SPEED_BONUS);
+    const spawnInterval = Math.max(MIN_SPAWN_INTERVAL, BASE_SPAWN_INTERVAL - elapsedSec * SPAWN_RAMP_PER_SEC);
+
+    spawnAccumulator += dt;
+    if (spawnAccumulator >= spawnInterval) {
+      spawnAccumulator = 0;
+      spawnObject();
+    }
+
+    const playerY = arenaH - PLAYER_BOTTOM_OFFSET;
+    let collided = false;
+
+    for (let i = objects.length - 1; i >= 0; i--) {
+      const obj = objects[i];
+      obj.y += speed * obj.speedMult * (dt / 1000);
+      obj.el.style.top = obj.y - obj.r + "px";
+
+      const dist = Math.hypot(obj.x - playerX, obj.y - playerY);
+      if (dist < obj.r + PLAYER_RADIUS) {
+        if (obj.type === "coin") {
+          score += 10;
+          spark("ad-burst", obj.x, obj.y);
+          obj.el.remove();
+          objects.splice(i, 1);
+          continue;
+        } else {
+          spark("ad-explosion", playerX, playerY, 26);
+          collided = true;
+          break;
+        }
+      }
+
+      if (obj.y - obj.r > arenaH + 20) {
+        obj.el.remove();
+        objects.splice(i, 1);
+      }
+    }
+
+    updateHud();
+
+    if (collided) {
+      endRun();
+      return;
+    }
+
+    rafId = requestAnimationFrame(loop);
+  }
+
+  function clearObjects() {
+    objects.forEach((o) => o.el.remove());
+    objects = [];
+  }
+
+  function startGame() {
+    showScreen("arena");
+    measureArena();
+    clearObjects();
+    score = 0;
+    elapsedMs = 0;
+    spawnAccumulator = 0;
+    setPlayerX(arenaW / 2);
+    updateHud();
+    running = true;
+    lastFrameTime = performance.now();
+    rafId = requestAnimationFrame(loop);
+  }
+
+  function stopGame() {
+    running = false;
+    if (rafId) cancelAnimationFrame(rafId);
+    rafId = null;
+    clearObjects();
+  }
+
+  if (arena) {
+    arena.addEventListener("mousemove", handleMouseMove);
+    arena.addEventListener("touchmove", handleTouchMove, { passive: false });
+    arena.addEventListener("touchstart", handleTouchMove, { passive: false });
+  }
+
+  openBtn.addEventListener("click", openModal);
+  if (closeBtn) closeBtn.addEventListener("click", closeModal);
+  if (backdrop) backdrop.addEventListener("click", closeModal);
+  if (startBtn) startBtn.addEventListener("click", startGame);
+  if (retryBtn) retryBtn.addEventListener("click", startGame);
+  if (exitBtn) exitBtn.addEventListener("click", closeModal);
+
+  // Capture-phase so this fires before the deck's own keydown handler —
+  // traps every key (not just Escape) while the game is open, so arrow
+  // keys/space don't drive slide navigation underneath the overlay.
+  window.addEventListener(
+    "keydown",
+    (e) => {
+      if (!modal.classList.contains("is-open")) return;
+      e.stopPropagation();
+      if (e.key === "Escape") closeModal();
+    },
+    true
+  );
+})();
